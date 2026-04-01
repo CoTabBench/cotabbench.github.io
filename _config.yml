@@ -1,0 +1,21 @@
+title: CoTabBench
+description: A Comprehensive Benchmark for Collaborative Table Understanding
+baseurl: ""
+url: "https://cotabbench.github.io"
+theme: null
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+highlighter: rouge
+permalink: pretty
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/
+  - .git/
+  - README.md

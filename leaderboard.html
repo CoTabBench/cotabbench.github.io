@@ -1,0 +1,385 @@
+---
+layout: default
+title: "Leaderboard"
+description: "CoTabBench model leaderboard — ranked results for all evaluated LLMs on collaborative table understanding tasks."
+---
+
+<!-- ============================================================
+     LEADERBOARD HERO
+     ============================================================ -->
+<section class="leaderboard-hero">
+  <div class="container">
+    <a href="{{ '/' | relative_url }}" class="back-link">
+      ← Back to Home
+    </a>
+    <h1 style="margin-top:24px;">🏆 CoTabBench Leaderboard</h1>
+    <p>
+      Ranked results for all evaluated language models on the CoTabBench benchmark.
+      Scores reflect performance across five collaborative table understanding task categories.
+    </p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:8px;">
+      <span style="display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:#94a3b8;background:#1e293b;padding:5px 14px;border-radius:9999px;border:1px solid #334155;">
+        📅 Last updated: April 2025
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:#94a3b8;background:#1e293b;padding:5px 14px;border-radius:9999px;border:1px solid #334155;">
+        🧪 Evaluation: zero-shot, no CoT
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:#94a3b8;background:#1e293b;padding:5px 14px;border-radius:9999px;border:1px solid #334155;">
+        📊 Models evaluated: 12
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LEADERBOARD TABLE
+     ============================================================ -->
+<section class="leaderboard-section">
+  <div class="container">
+
+    <!-- Controls -->
+    <div class="lb-controls">
+      <div class="lb-filters" role="group" aria-label="Filter models by source">
+        <button class="filter-btn active" data-filter="all">All Models</button>
+        <button class="filter-btn" data-filter="open">Open Source</button>
+        <button class="filter-btn" data-filter="closed">Closed Source</button>
+      </div>
+      <span class="lb-meta" id="lbCount">Showing 12 of 12 models</span>
+    </div>
+
+    <!-- Table -->
+    <div class="lb-table-wrap">
+      <table class="lb-table" aria-label="CoTabBench model leaderboard">
+        <thead>
+          <tr>
+            <th data-col="0" aria-sort="none">Rank<span class="sort-icon"></span></th>
+            <th data-col="1" class="sort-desc" aria-sort="descending">Overall<span class="sort-icon"></span></th>
+            <th data-col="2" aria-sort="none">Model<span class="sort-icon"></span></th>
+            <th data-col="3" aria-sort="none">Table QA<span class="sort-icon"></span></th>
+            <th data-col="4" aria-sort="none">Cell Lookup<span class="sort-icon"></span></th>
+            <th data-col="5" aria-sort="none">Summarization<span class="sort-icon"></span></th>
+            <th data-col="6" aria-sort="none">Multi-turn<span class="sort-icon"></span></th>
+            <th data-col="7" aria-sort="none">Open Source<span class="sort-icon"></span></th>
+          </tr>
+        </thead>
+        <tbody id="lbBody">
+
+          <!-- Rank 1 — GPT-4o -->
+          <tr data-open="false">
+            <td class="rank-cell" data-value="1">
+              <span class="rank-medal rank-medal--1">1</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="72.3">72.3</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">GPT-4o</div>
+            </td>
+            <td class="score-cell" data-value="78.5">78.5</td>
+            <td class="score-cell" data-value="85.2">85.2</td>
+            <td class="score-cell" data-value="68.4">68.4</td>
+            <td class="score-cell" data-value="65.1">65.1</td>
+            <td>
+              <span class="open-badge open-badge--no">
+                🔒 No
+              </span>
+            </td>
+          </tr>
+
+          <!-- Rank 2 — Claude 3.5 Sonnet -->
+          <tr data-open="false">
+            <td class="rank-cell" data-value="2">
+              <span class="rank-medal rank-medal--2">2</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="70.8">70.8</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">Claude 3.5 Sonnet</div>
+            </td>
+            <td class="score-cell" data-value="76.2">76.2</td>
+            <td class="score-cell" data-value="83.1">83.1</td>
+            <td class="score-cell" data-value="67.9">67.9</td>
+            <td class="score-cell" data-value="63.8">63.8</td>
+            <td>
+              <span class="open-badge open-badge--no">
+                🔒 No
+              </span>
+            </td>
+          </tr>
+
+          <!-- Rank 3 — CoTabLLM (Ours) -->
+          <tr data-open="true" class="row--ours">
+            <td class="rank-cell" data-value="3">
+              <span class="rank-medal rank-medal--3">3</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="68.4">68.4</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">
+                CoTabLLM
+                <span class="ours-badge">Ours</span>
+              </div>
+            </td>
+            <td class="score-cell" data-value="73.1">73.1</td>
+            <td class="score-cell" data-value="80.5">80.5</td>
+            <td class="score-cell" data-value="65.2">65.2</td>
+            <td class="score-cell" data-value="61.7">61.7</td>
+            <td>
+              <span class="open-badge open-badge--yes">
+                ✓ Yes
+              </span>
+            </td>
+          </tr>
+
+          <!-- Rank 4 — Gemini 1.5 Pro -->
+          <tr data-open="false">
+            <td class="rank-cell" data-value="4">
+              <span class="rank-medal rank-medal--n">4</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="67.9">67.9</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">Gemini 1.5 Pro</div>
+            </td>
+            <td class="score-cell" data-value="72.8">72.8</td>
+            <td class="score-cell" data-value="79.4">79.4</td>
+            <td class="score-cell" data-value="64.8">64.8</td>
+            <td class="score-cell" data-value="60.2">60.2</td>
+            <td>
+              <span class="open-badge open-badge--no">
+                🔒 No
+              </span>
+            </td>
+          </tr>
+
+          <!-- Rank 5 — GPT-4 Turbo -->
+          <tr data-open="false">
+            <td class="rank-cell" data-value="5">
+              <span class="rank-medal rank-medal--n">5</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="65.2">65.2</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">GPT-4 Turbo</div>
+            </td>
+            <td class="score-cell" data-value="70.1">70.1</td>
+            <td class="score-cell" data-value="76.8">76.8</td>
+            <td class="score-cell" data-value="62.3">62.3</td>
+            <td class="score-cell" data-value="58.9">58.9</td>
+            <td>
+              <span class="open-badge open-badge--no">
+                🔒 No
+              </span>
+            </td>
+          </tr>
+
+          <!-- Rank 6 — Qwen2.5 72B -->
+          <tr data-open="true">
+            <td class="rank-cell" data-value="6">
+              <span class="rank-medal rank-medal--n">6</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="61.4">61.4</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">Qwen2.5 72B</div>
+            </td>
+            <td class="score-cell" data-value="66.3">66.3</td>
+            <td class="score-cell" data-value="72.1">72.1</td>
+            <td class="score-cell" data-value="58.7">58.7</td>
+            <td class="score-cell" data-value="54.6">54.6</td>
+            <td>
+              <span class="open-badge open-badge--yes">
+                ✓ Yes
+              </span>
+            </td>
+          </tr>
+
+          <!-- Rank 7 — Llama 3.1 70B -->
+          <tr data-open="true">
+            <td class="rank-cell" data-value="7">
+              <span class="rank-medal rank-medal--n">7</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="58.7">58.7</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">Llama 3.1 70B</div>
+            </td>
+            <td class="score-cell" data-value="63.5">63.5</td>
+            <td class="score-cell" data-value="68.9">68.9</td>
+            <td class="score-cell" data-value="55.4">55.4</td>
+            <td class="score-cell" data-value="51.2">51.2</td>
+            <td>
+              <span class="open-badge open-badge--yes">
+                ✓ Yes
+              </span>
+            </td>
+          </tr>
+
+          <!-- Rank 8 — Mistral Large -->
+          <tr data-open="false">
+            <td class="rank-cell" data-value="8">
+              <span class="rank-medal rank-medal--n">8</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="57.3">57.3</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">Mistral Large</div>
+            </td>
+            <td class="score-cell" data-value="62.1">62.1</td>
+            <td class="score-cell" data-value="67.3">67.3</td>
+            <td class="score-cell" data-value="54.8">54.8</td>
+            <td class="score-cell" data-value="49.7">49.7</td>
+            <td>
+              <span class="open-badge open-badge--no">
+                🔒 No
+              </span>
+            </td>
+          </tr>
+
+          <!-- Rank 9 — Gemma 2 27B -->
+          <tr data-open="true">
+            <td class="rank-cell" data-value="9">
+              <span class="rank-medal rank-medal--n">9</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="48.3">48.3</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">Gemma 2 27B</div>
+            </td>
+            <td class="score-cell" data-value="52.7">52.7</td>
+            <td class="score-cell" data-value="56.4">56.4</td>
+            <td class="score-cell" data-value="46.2">46.2</td>
+            <td class="score-cell" data-value="41.8">41.8</td>
+            <td>
+              <span class="open-badge open-badge--yes">
+                ✓ Yes
+              </span>
+            </td>
+          </tr>
+
+          <!-- Rank 10 — GPT-3.5 Turbo -->
+          <tr data-open="false">
+            <td class="rank-cell" data-value="10">
+              <span class="rank-medal rank-medal--n">10</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="52.6">52.6</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">GPT-3.5 Turbo</div>
+            </td>
+            <td class="score-cell" data-value="57.4">57.4</td>
+            <td class="score-cell" data-value="61.8">61.8</td>
+            <td class="score-cell" data-value="50.2">50.2</td>
+            <td class="score-cell" data-value="45.3">45.3</td>
+            <td>
+              <span class="open-badge open-badge--no">
+                🔒 No
+              </span>
+            </td>
+          </tr>
+
+          <!-- Rank 11 — Llama 3.1 8B -->
+          <tr data-open="true">
+            <td class="rank-cell" data-value="11">
+              <span class="rank-medal rank-medal--n">11</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="45.8">45.8</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">Llama 3.1 8B</div>
+            </td>
+            <td class="score-cell" data-value="50.2">50.2</td>
+            <td class="score-cell" data-value="53.6">53.6</td>
+            <td class="score-cell" data-value="43.1">43.1</td>
+            <td class="score-cell" data-value="38.7">38.7</td>
+            <td>
+              <span class="open-badge open-badge--yes">
+                ✓ Yes
+              </span>
+            </td>
+          </tr>
+
+          <!-- Rank 12 — Mistral 7B -->
+          <tr data-open="true">
+            <td class="rank-cell" data-value="12">
+              <span class="rank-medal rank-medal--n">12</span>
+            </td>
+            <td class="score-cell score-cell--overall" data-value="39.2">39.2</td>
+            <td class="model-cell">
+              <div class="model-name-wrap">Mistral 7B</div>
+            </td>
+            <td class="score-cell" data-value="43.8">43.8</td>
+            <td class="score-cell" data-value="47.1">47.1</td>
+            <td class="score-cell" data-value="37.4">37.4</td>
+            <td class="score-cell" data-value="32.6">32.6</td>
+            <td>
+              <span class="open-badge open-badge--yes">
+                ✓ Yes
+              </span>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Legend -->
+    <div class="lb-legend">
+      <div class="legend-item">
+        <span class="rank-medal rank-medal--1" style="width:22px;height:22px;font-size:.72rem;">1</span>
+        Gold
+      </div>
+      <div class="legend-item">
+        <span class="rank-medal rank-medal--2" style="width:22px;height:22px;font-size:.72rem;">2</span>
+        Silver
+      </div>
+      <div class="legend-item">
+        <span class="rank-medal rank-medal--3" style="width:22px;height:22px;font-size:.72rem;">3</span>
+        Bronze
+      </div>
+      <div class="legend-item" style="margin-left:8px;">
+        <span style="display:inline-block;width:16px;height:16px;background:linear-gradient(90deg,#f5f3ff,#eff6ff);border:1px solid #c4b5fd;border-radius:3px;"></span>
+        Our model (CoTabLLM)
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="lb-notes">
+      <h4>Evaluation Notes</h4>
+      <ul>
+        <li>All models evaluated in zero-shot setting (no few-shot examples, no chain-of-thought prompting) using the standardized CoTabBench prompt templates.</li>
+        <li>Overall score is the macro-average across all five task categories, weighted equally.</li>
+        <li>Scores for closed-source models reflect performance at a fixed API snapshot; scores may vary across model versions.</li>
+        <li>CoTabLLM is fine-tuned on CoTabInstruct (which is derived from training splits only); no test data leakage.</li>
+        <li>We welcome community submissions — see the GitHub repository for evaluation instructions and submission guidelines.</li>
+      </ul>
+    </div>
+
+    <!-- Score distribution context -->
+    <div style="margin-top:48px;">
+      <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:20px;color:var(--color-text);">Score Distribution by Task Type</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+
+        <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:20px;">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#2563eb;margin-bottom:10px;">❓ Table QA</div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Best: <strong style="color:var(--color-text);">GPT-4o (78.5)</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Avg: <strong style="color:var(--color-text);">62.4</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);">Gap (best vs. worst): <strong style="color:var(--color-text);">34.7</strong></div>
+        </div>
+
+        <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:20px;">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#7c3aed;margin-bottom:10px;">🔍 Cell Lookup</div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Best: <strong style="color:var(--color-text);">GPT-4o (85.2)</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Avg: <strong style="color:var(--color-text);">69.3</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);">Gap (best vs. worst): <strong style="color:var(--color-text);">38.1</strong></div>
+        </div>
+
+        <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:20px;">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#059669;margin-bottom:10px;">📝 Summarization</div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Best: <strong style="color:var(--color-text);">GPT-4o (68.4)</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Avg: <strong style="color:var(--color-text);">56.1</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);">Gap (best vs. worst): <strong style="color:var(--color-text);">31.0</strong></div>
+        </div>
+
+        <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:20px;">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#d97706;margin-bottom:10px;">💬 Multi-turn</div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Best: <strong style="color:var(--color-text);">GPT-4o (65.1)</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Avg: <strong style="color:var(--color-text);">51.9</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);">Gap (best vs. worst): <strong style="color:var(--color-text);">32.5</strong></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script src="{{ '/assets/js/leaderboard.js' | relative_url }}"></script>
