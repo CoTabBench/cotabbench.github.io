@@ -1,11 +1,25 @@
 title: CoTabBench
-description: A Comprehensive Benchmark for Collaborative Table Understanding
+description: A Real-World Complex Benchmark for Table QA with Structural Irregularity and Content Heterogeneity
 baseurl: ""
 url: "https://cotabbench.github.io"
+
+# ── External links ────────────────────────────────────────────
+# Leave a value empty ("") to show a "Coming Soon / disabled" state.
+# Fill in the URL string to activate the link.
+links:
+  paper:            ""          # ArXiv / ACL Anthology URL
+  appendix:         "https://anonymous.4open.science/r/CoTabBench-SIL7EAD/Appendix.pdf"          # Supplementary PDF URL
+  github:           "https://anonymous.4open.science/r/CoTabBench-SIL7EAD/"   # Main GitHub repo
+  dataset_bench:    "https://anonymous.4open.science/r/CoTabBench-SIL7EAD/"          # HuggingFace dataset — CoTabBench eval set
+  dataset_instruct: "https://anonymous.4open.science/r/CoTabBench-SIL7EAD/"          # HuggingFace dataset — CoTabInstruct corpus
+  model_weights:    ""          # HuggingFace model — CoTabLLM weights
+  eval_toolkit:     ""          # GitHub — evaluation toolkit repo
 theme: null
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+
+# GitHub Pages uses its own build — these settings are for local dev only
 markdown: kramdown
 kramdown:
   input: GFM

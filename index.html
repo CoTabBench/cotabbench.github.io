@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "CoTabBench: A Comprehensive Benchmark for Collaborative Table Understanding"
-description: "CoTabBench is the first large-scale benchmark designed to evaluate language models on collaborative, multi-turn table understanding tasks spanning table QA, cell lookup, summarization, and data analysis."
+title: "CoTabBench: A Real-World Complex Benchmark for Table QA with Structural Irregularity and Content Heterogeneity"
+description: "CoTabBench is a large-scale, multi-domain benchmark of native LaTeX and HTML tables featuring structural irregularity and content heterogeneity, with 2,717 tables and 8,609 QA pairs across 10 domains."
 ---
 
 <!-- ============================================================
@@ -10,28 +10,53 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
 <section class="hero" id="top">
   <div class="container hero-content">
     <div class="hero-eyebrow">
-      📊 NeurIPS 2025 — Under Anonymous Review
+      📊 Under Anonymous Review
     </div>
 
     <h1 class="hero-title">CoTabBench</h1>
     <p class="hero-subtitle">
-      A Comprehensive Benchmark for Collaborative Table Understanding
+      A Real-World Complex Benchmark for Table QA with<br>Structural Irregularity and Content Heterogeneity
     </p>
 
     <div class="hero-badges">
+      {% if site.links.paper != "" %}
+      <a href="{{ site.links.paper }}" class="badge badge--primary" target="_blank" rel="noopener noreferrer">
+        <span class="badge-icon">📄</span>
+        Paper
+      </a>
+      {% else %}
       <span class="badge badge--primary badge--disabled">
         <span class="badge-icon">📄</span>
         Paper (Coming Soon)
       </span>
+      {% endif %}
+      {% if site.links.appendix != "" %}
+      <a href="{{ site.links.appendix }}" class="badge badge--outline" target="_blank" rel="noopener noreferrer">
+        <span class="badge-icon">📋</span>
+        Appendix
+      </a>
+      {% else %}
+      <span class="badge badge--outline badge--disabled">
+        <span class="badge-icon">📋</span>
+        Appendix (Coming Soon)
+      </span>
+      {% endif %}
+      {% if site.links.dataset_bench != "" %}
+      <a href="{{ site.links.dataset_bench }}" class="badge badge--accent" target="_blank" rel="noopener noreferrer">
+        <span class="badge-icon">🤗</span>
+        Dataset
+      </a>
+      {% else %}
       <a href="#download" class="badge badge--accent">
         <span class="badge-icon">🤗</span>
         Dataset
       </a>
+      {% endif %}
       <a href="/leaderboard" class="badge badge--secondary">
         <span class="badge-icon">🏆</span>
         Leaderboard
       </a>
-      <a href="https://github.com" class="badge badge--outline" target="_blank" rel="noopener noreferrer">
+      <a href="{{ site.links.github }}" class="badge badge--outline" target="_blank" rel="noopener noreferrer">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
         </svg>
@@ -42,24 +67,24 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
     <!-- Stats bar -->
     <div class="hero-stats">
       <div class="stat-item">
-        <div class="stat-value">6,500+</div>
-        <div class="stat-label">Instances</div>
+        <div class="stat-value">8,609</div>
+        <div class="stat-label">QA Pairs</div>
       </div>
       <div class="stat-item">
-        <div class="stat-value">2,100+</div>
+        <div class="stat-value">2,717</div>
         <div class="stat-label">Tables</div>
       </div>
       <div class="stat-item">
-        <div class="stat-value">12</div>
+        <div class="stat-value">10</div>
         <div class="stat-label">Domains</div>
       </div>
       <div class="stat-item">
-        <div class="stat-value">5</div>
+        <div class="stat-value">3</div>
         <div class="stat-label">Task Types</div>
       </div>
       <div class="stat-item">
-        <div class="stat-value">8</div>
-        <div class="stat-label">Metrics</div>
+        <div class="stat-value">20+</div>
+        <div class="stat-label">Models Evaluated</div>
       </div>
     </div>
   </div>
@@ -72,46 +97,41 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
   <div class="container">
     <div class="section-header">
       <span class="section-label">📝 Abstract</span>
-      <h2>Benchmarking Collaborative Table Understanding</h2>
+      <h2>Real-World Tables Demand a New Benchmark</h2>
     </div>
     <div class="abstract-body">
       <p>
-        Tabular data is one of the most prevalent formats for storing and communicating structured
-        information across enterprise, scientific, and everyday domains. While recent large language
-        models (LLMs) have demonstrated impressive capabilities on isolated table understanding
-        tasks, their ability to engage in <em>sustained, multi-turn reasoning</em> over tabular
-        data within collaborative conversational settings remains poorly understood and
-        systematically under-evaluated.
+        Recent advancements in Large Language Models (LLMs) and Multimodal Large Language Models
+        (MLLMs) have significantly propelled their capabilities in table-based question answering.
+        However, existing benchmarks predominantly feature <em>well-structured tables in simplified
+        formats</em>, failing to evaluate models on real-world tables in their native LaTeX and
+        HTML form — whose expressive flexibility gives rise to structural irregularity and content
+        heterogeneity.
       </p>
       <div class="abstract-highlight">
-        We introduce <strong>CoTabBench</strong>, the first large-scale benchmark specifically
-        designed to evaluate the collaborative table understanding capabilities of LLMs — where
-        models must interpret, query, and reason about tables across extended multi-turn dialogues
-        that mirror real-world data analysis workflows.
+        We introduce <strong>CoTabBench</strong>, a large-scale, multi-domain benchmark featuring
+        over <strong>2,717 real-world tables</strong> with structural irregularity and more than
+        <strong>8,609 question-answer pairs</strong> spanning <strong>10 distinct domains</strong>.
+        Each table is provided in two forms: the original markup source and the rendered image,
+        preserving the inherently dual-modal nature of LaTeX and HTML tables.
       </div>
       <p>
-        CoTabBench comprises <strong>6,500+ carefully curated instances</strong> spanning five core
-        task categories — Table Question Answering, Cell Lookup, Table Summarization, Multi-turn
-        Dialog, and Data Analysis — collected across 12 diverse domains including finance,
-        healthcare, scientific literature, e-commerce, and government statistics. Each instance
-        captures the full context of a collaborative session, including follow-up questions,
-        clarifications, and iterative refinements that occur naturally when humans and AI systems
-        co-analyze structured data.
+        Real-world LaTeX and HTML tables are inherently dual-modal — they exist simultaneously as
+        structured textual code and as rendered two-dimensional visual objects. Processing either
+        form requires both semantic understanding and visual-spatial reasoning. Yet no existing
+        benchmark systematically evaluates LLMs and MLLMs on complex tables in their native markup form.
       </p>
       <p>
-        We evaluate 12 state-of-the-art LLMs on CoTabBench, revealing significant performance gaps
-        between closed-source frontier models and open-source alternatives, particularly in
-        multi-turn consistency and numerical reasoning. To address these gaps, we present
-        <strong>CoTabInstruct</strong>, an instruction-tuning dataset of 85,000+ conversation
-        turns, and <strong>CoTabLLM</strong>, a fine-tuned model that achieves competitive
-        performance with proprietary systems while remaining fully open-source.
+        We further propose <strong>BiSC-Quant</strong>, a novel complexity assessment framework
+        that quantitatively validates the structural and content-based challenges within CoTabBench.
+        Extensive experiments reveal significant performance degradation for state-of-the-art models,
+        highlighting the critical role of this benchmark in advancing robust, real-world table understanding.
       </p>
       <p>
-        Our analysis uncovers key challenges in collaborative table understanding: maintaining
-        coherent context across long conversations, grounding responses in specific table cells,
-        and accurately synthesizing multi-step analytical reasoning. CoTabBench establishes a
-        rigorous and reproducible evaluation framework that we hope will drive progress in this
-        practically important yet underexplored area.
+        To support model training, we introduce <strong>CoTabInstruct</strong>, a large-scale
+        training corpus with over 11,096 tables and 32,645 QA pairs, and present
+        <strong>CoTabLLM</strong>, a 7B model trained on it that outperforms even leading models
+        like GPT-5.4 on our benchmark.
       </p>
     </div>
   </div>
@@ -120,6 +140,22 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
 <!-- ============================================================
      OVERVIEW — THREE CONTRIBUTIONS
      ============================================================ -->
+<!-- ============================================================
+     TEASER FIGURE
+     ============================================================ -->
+<section style="background:var(--color-bg);padding:48px 0 32px;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;text-align:center;">
+    <img
+      src="{{ '/assets/images/overview.svg' | relative_url }}"
+      alt="Overview of CoTabBench: dual-source table collection, multi-agent annotation framework, and three tasks"
+      style="display:block;width:100%;height:auto;border:1px solid var(--color-border);border-radius:var(--radius-md);box-shadow:0 4px 24px rgba(0,0,0,.07);"
+    />
+    <p style="margin-top:14px;font-size:.88rem;color:var(--color-text-muted);line-height:1.6;">
+      <strong>Figure 1.</strong> Overview of CoTabBench: tables are sourced from ArXiv LaTeX and web HTML, filtered through a multi-stage pipeline, and annotated via a five-agent framework into three task categories — Row &amp; Column Counting, Table QA, and Hallucination Detection.
+    </p>
+  </div>
+</section>
+
 <section class="overview" id="overview">
   <div class="container">
     <div class="section-header">
@@ -139,22 +175,23 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
         <span class="card-tag card-tag--bench">Benchmark</span>
         <h3>CoTabBench</h3>
         <p>
-          A comprehensive evaluation suite covering five collaborative table understanding
-          tasks across 12 domains. All instances are sourced from authentic human–AI
-          interaction logs and expert-validated for correctness. Evaluation is conducted with
-          a mix of exact-match, ROUGE, and model-based metrics.
+          A large-scale evaluation benchmark of native LaTeX and HTML tables sourced from
+          academic literature (ArXiv) and real-world websites. Tables exhibit structural
+          irregularity (merged cells, hierarchical headers) and content heterogeneity
+          (formulas, symbols, long-form text). Each table is provided in both markup and
+          rendered-image forms.
         </p>
         <div class="card-stats-row">
           <div class="card-stat">
-            <span class="card-stat-val">6,500+</span>
-            <span class="card-stat-lbl">Instances</span>
+            <span class="card-stat-val">8,609</span>
+            <span class="card-stat-lbl">QA Pairs</span>
           </div>
           <div class="card-stat">
-            <span class="card-stat-val">5</span>
-            <span class="card-stat-lbl">Task Types</span>
+            <span class="card-stat-val">2,717</span>
+            <span class="card-stat-lbl">Tables</span>
           </div>
           <div class="card-stat">
-            <span class="card-stat-val">12</span>
+            <span class="card-stat-val">10</span>
             <span class="card-stat-lbl">Domains</span>
           </div>
         </div>
@@ -166,23 +203,24 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
         <span class="card-tag card-tag--instruct">Dataset</span>
         <h3>CoTabInstruct</h3>
         <p>
-          An instruction-following dataset of 85,000+ multi-turn conversations grounded in
-          real tables. Each conversation is structured as a sequence of user instructions and
-          model responses, curated to teach models to track conversational context, resolve
-          co-references, and ground answers in specific table regions.
+          A large-scale instruction-tuning corpus built from the same dual-source pipeline
+          as CoTabBench, but strictly partitioned to avoid test leakage. QA pairs are
+          generated via a five-agent annotation framework with dual-path consistency
+          verification and multi-LLM voting. Released to enable the community to fine-tune
+          models for complex table understanding.
         </p>
         <div class="card-stats-row">
           <div class="card-stat">
-            <span class="card-stat-val">85K+</span>
-            <span class="card-stat-lbl">Conversations</span>
+            <span class="card-stat-val">32,645</span>
+            <span class="card-stat-lbl">QA Pairs</span>
           </div>
           <div class="card-stat">
-            <span class="card-stat-val">420K+</span>
-            <span class="card-stat-lbl">Turns</span>
-          </div>
-          <div class="card-stat">
-            <span class="card-stat-val">18K+</span>
+            <span class="card-stat-val">11,096</span>
             <span class="card-stat-lbl">Tables</span>
+          </div>
+          <div class="card-stat">
+            <span class="card-stat-val">10</span>
+            <span class="card-stat-lbl">Domains</span>
           </div>
         </div>
       </div>
@@ -193,23 +231,24 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
         <span class="card-tag card-tag--llm">Model</span>
         <h3>CoTabLLM</h3>
         <p>
-          A 7B-parameter open-source language model fine-tuned on CoTabInstruct using
-          supervised fine-tuning and preference alignment. CoTabLLM achieves an overall score
-          of <strong>68.4</strong> on CoTabBench — surpassing Gemini 1.5 Pro and GPT-4 Turbo
-          while remaining fully open-weight and reproducible.
+          A series of models at 7B and 8B parameter scales trained on CoTabInstruct via
+          SFT+LoRA. CoTabLLM-7B (based on Qwen2.5-7B) achieves strong performance on
+          CoTabBench, surpassing considerably larger general-purpose models including
+          GPT-5.4 — demonstrating that targeted domain adaptation is more effective
+          than raw model scale for complex table understanding.
         </p>
         <div class="card-stats-row">
           <div class="card-stat">
-            <span class="card-stat-val">68.4</span>
-            <span class="card-stat-lbl">Overall Score</span>
-          </div>
-          <div class="card-stat">
-            <span class="card-stat-val">7B</span>
+            <span class="card-stat-val">7B / 8B</span>
             <span class="card-stat-lbl">Parameters</span>
           </div>
           <div class="card-stat">
-            <span class="card-stat-val">#3</span>
-            <span class="card-stat-lbl">Leaderboard</span>
+            <span class="card-stat-val">SFT+LoRA</span>
+            <span class="card-stat-lbl">Training</span>
+          </div>
+          <div class="card-stat">
+            <span class="card-stat-val">Open</span>
+            <span class="card-stat-lbl">Source</span>
           </div>
         </div>
       </div>
@@ -227,9 +266,8 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
       <span class="section-label">📊 CoTabBench Details</span>
       <h2>Benchmark Design &amp; Task Categories</h2>
       <p>
-        CoTabBench is constructed through a rigorous multi-stage pipeline combining
-        automated generation, human annotation, and adversarial filtering to ensure
-        quality and difficulty.
+        CoTabBench is constructed via a dual-source collection pipeline, rigorous multi-stage
+        filtering, and a five-agent QA annotation framework with automated validation.
       </p>
     </div>
 
@@ -237,18 +275,19 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
 
       <!-- Left: text -->
       <div class="benchmark-text">
-        <h3>Design Principles</h3>
+        <h3>What Makes CoTabBench Unique</h3>
         <p>
-          Real-world table interactions rarely occur in isolation. Data analysts follow up on
-          initial queries, request different views of the same table, compare across rows, and
-          seek explanations for anomalies. CoTabBench operationalizes this reality by structuring
-          all instances as <em>sessions</em> — multi-turn exchanges where each turn depends on
-          the context established by prior turns.
+          Existing benchmarks rely on clean, regular Wikipedia tables. CoTabBench sources tables
+          directly <em>in the wild</em> — extracting LaTeX tables from the DocGenome dataset
+          (ArXiv papers) and HTML tables via large-scale web crawling across 10 domains.
+          The result is a benchmark that reflects the full structural and semantic complexity
+          of real-world tables.
         </p>
         <p>
-          Tables in CoTabBench range from compact 5×5 matrices to large 100-row financial
-          reports, with a median size of 8 columns and 32 rows. All tables are stored in a
-          unified JSON format compatible with standard data science tooling.
+          Each table is provided in two forms: the original <strong>markup source</strong> (LaTeX
+          or HTML) and a <strong>rendered image</strong>, preserving the dual-modal nature of
+          real-world tables. Average table length is <strong>952.3 tokens</strong> with
+          14.9 rows and 8.4 columns on average.
         </p>
 
         <div class="feature-list">
@@ -257,8 +296,8 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
               <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
             </span>
             <div class="feature-text">
-              <strong>Multi-turn Sessions</strong>
-              <span>— Average 4.8 turns per session; longest sessions exceed 12 turns</span>
+              <strong>Structural Irregularity</strong>
+              <span>— 98.3% of tables contain merged cells; avg. 70.6 merged cells per table</span>
             </div>
           </div>
           <div class="feature-item">
@@ -266,8 +305,8 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
               <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
             </span>
             <div class="feature-text">
-              <strong>Cross-Domain Coverage</strong>
-              <span>— Finance, healthcare, science, e-commerce, sports, government &amp; more</span>
+              <strong>Content Heterogeneity</strong>
+              <span>— Cells contain formulas, special symbols (†, *), complex numerics ($1.2M, ±0.5), and long-form text</span>
             </div>
           </div>
           <div class="feature-item">
@@ -275,8 +314,8 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
               <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
             </span>
             <div class="feature-text">
-              <strong>Adversarial Filtering</strong>
-              <span>— Items solvable by simple lookup or keyword matching were removed</span>
+              <strong>Dual-Modal Inputs</strong>
+              <span>— Each table available as LaTeX/HTML markup and as a rendered image for multimodal evaluation</span>
             </div>
           </div>
           <div class="feature-item">
@@ -284,8 +323,8 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
               <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
             </span>
             <div class="feature-text">
-              <strong>Expert Validation</strong>
-              <span>— All gold answers verified by domain experts with inter-annotator agreement ≥ 0.87</span>
+              <strong>Multi-Agent Annotation</strong>
+              <span>— Five specialized agents (Qwen-Plus-Thinking backbone) with dual-path consistency verification</span>
             </div>
           </div>
           <div class="feature-item">
@@ -293,26 +332,24 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
               <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
             </span>
             <div class="feature-text">
-              <strong>Composite Evaluation</strong>
-              <span>— Exact match, F1, ROUGE-L, BERTScore, and numerical accuracy metrics</span>
+              <strong>Human Verification</strong>
+              <span>— All 8,609 test instances manually validated by 5 annotators; Cohen's κ = 0.82</span>
             </div>
           </div>
         </div>
 
         <h3 style="margin-top:28px;">Covered Domains</h3>
         <div class="domain-grid">
+          <span class="domain-badge">Science / Academic</span>
+          <span class="domain-badge">Government</span>
           <span class="domain-badge">Finance</span>
-          <span class="domain-badge">Healthcare</span>
-          <span class="domain-badge">Scientific Papers</span>
-          <span class="domain-badge">E-Commerce</span>
-          <span class="domain-badge">Government Stats</span>
-          <span class="domain-badge">Sports Analytics</span>
+          <span class="domain-badge">Medicine</span>
+          <span class="domain-badge">Sports</span>
           <span class="domain-badge">Education</span>
-          <span class="domain-badge">Climate &amp; Energy</span>
-          <span class="domain-badge">Transportation</span>
-          <span class="domain-badge">Real Estate</span>
-          <span class="domain-badge">Human Resources</span>
-          <span class="domain-badge">Manufacturing</span>
+          <span class="domain-badge">Law</span>
+          <span class="domain-badge">Technology</span>
+          <span class="domain-badge">Economics</span>
+          <span class="domain-badge">Environment</span>
         </div>
       </div>
 
@@ -326,94 +363,159 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
               <span class="task-bar-emoji">❓</span>
               Table Question Answering
             </span>
-            <span class="task-bar-count">2,040 instances</span>
+            <span class="task-bar-count">3,246 instances (37.7%)</span>
           </div>
           <div class="task-bar-track">
             <div class="task-bar-fill task-bar-fill--qa" style="width:100%"></div>
           </div>
+          <p style="font-size:.78rem;color:var(--color-text-muted);margin:4px 0 0;">Joint semantic and spatial reasoning: locate answers under hierarchical headers and multi-span cells.</p>
         </div>
 
         <div class="task-bar-item">
           <div class="task-bar-header">
             <span class="task-bar-name">
-              <span class="task-bar-emoji">🔍</span>
-              Cell Lookup &amp; Retrieval
+              <span class="task-bar-emoji">🔢</span>
+              Row &amp; Column Counting
             </span>
-            <span class="task-bar-count">1,560 instances</span>
+            <span class="task-bar-count">2,721 instances (31.6%)</span>
           </div>
           <div class="task-bar-track">
-            <div class="task-bar-fill task-bar-fill--lookup" style="width:76%"></div>
+            <div class="task-bar-fill task-bar-fill--lookup" style="width:84%"></div>
           </div>
+          <p style="font-size:.78rem;color:var(--color-text-muted);margin:4px 0 0;">Structural comprehension: counting logical rows/columns requires understanding cell-merge semantics, not naive enumeration.</p>
         </div>
 
         <div class="task-bar-item">
           <div class="task-bar-header">
             <span class="task-bar-name">
-              <span class="task-bar-emoji">💬</span>
-              Multi-turn Dialog
+              <span class="task-bar-emoji">🚨</span>
+              Hallucination Detection
             </span>
-            <span class="task-bar-count">1,240 instances</span>
+            <span class="task-bar-count">2,642 instances (30.7%)</span>
           </div>
           <div class="task-bar-track">
-            <div class="task-bar-fill task-bar-fill--dialog" style="width:61%"></div>
+            <div class="task-bar-fill task-bar-fill--dialog" style="width:81%"></div>
           </div>
-        </div>
-
-        <div class="task-bar-item">
-          <div class="task-bar-header">
-            <span class="task-bar-name">
-              <span class="task-bar-emoji">📈</span>
-              Data Analysis
-            </span>
-            <span class="task-bar-count">1,020 instances</span>
-          </div>
-          <div class="task-bar-track">
-            <div class="task-bar-fill task-bar-fill--analysis" style="width:50%"></div>
-          </div>
-        </div>
-
-        <div class="task-bar-item">
-          <div class="task-bar-header">
-            <span class="task-bar-name">
-              <span class="task-bar-emoji">📝</span>
-              Table Summarization
-            </span>
-            <span class="task-bar-count">820 instances</span>
-          </div>
-          <div class="task-bar-track">
-            <div class="task-bar-fill task-bar-fill--summary" style="width:40%"></div>
-          </div>
+          <p style="font-size:.78rem;color:var(--color-text-muted);margin:4px 0 0;">Adversarial questions with false premises: Data Absence (querying non-existent info) and Attribution Error (mismatched value–structure pairs).</p>
         </div>
 
         <div class="task-total">
-          <span>Total Instances</span>
-          <span class="task-total-count">6,680</span>
+          <span>Total QA Pairs</span>
+          <span class="task-total-count">8,609</span>
         </div>
 
         <!-- Evaluation metrics breakdown -->
         <div style="margin-top:28px;">
-          <h3 style="font-size:.95rem;margin-bottom:16px;">Evaluation Metrics Used</h3>
+          <h3 style="font-size:.95rem;margin-bottom:16px;">Evaluation Metrics</h3>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
             <div style="background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:12px 14px;">
-              <div style="font-size:.72rem;font-weight:700;color:var(--color-primary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Exact Match</div>
-              <div style="font-size:.82rem;color:var(--color-text-muted);">Cell Lookup, Table QA</div>
+              <div style="font-size:.72rem;font-weight:700;color:var(--color-primary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Accuracy</div>
+              <div style="font-size:.82rem;color:var(--color-text-muted);">Row/Col Counting &amp; Hallucination Detection</div>
             </div>
             <div style="background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:12px 14px;">
-              <div style="font-size:.72rem;font-weight:700;color:var(--color-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">ROUGE-L</div>
-              <div style="font-size:.82rem;color:var(--color-text-muted);">Summarization, Dialog</div>
+              <div style="font-size:.72rem;font-weight:700;color:var(--color-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Exact Match</div>
+              <div style="font-size:.82rem;color:var(--color-text-muted);">TableQA (after text normalization)</div>
             </div>
-            <div style="background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:12px 14px;">
-              <div style="font-size:.72rem;font-weight:700;color:var(--color-accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">BERTScore</div>
-              <div style="font-size:.82rem;color:var(--color-text-muted);">Semantic similarity</div>
-            </div>
-            <div style="background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:12px 14px;">
-              <div style="font-size:.72rem;font-weight:700;color:var(--color-warning);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Num. Accuracy</div>
-              <div style="font-size:.82rem;color:var(--color-text-muted);">Data Analysis tasks</div>
-            </div>
+          </div>
+        </div>
+
+        <!-- Dataset statistics -->
+        <div style="margin-top:20px;background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:16px;">
+          <h3 style="font-size:.95rem;margin-bottom:12px;">Dataset Statistics</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:.82rem;">
+            <span style="color:var(--color-text-muted);">Avg. tokens / table</span><span style="font-weight:600;">952.3</span>
+            <span style="color:var(--color-text-muted);">Avg. rows / table</span><span style="font-weight:600;">14.9</span>
+            <span style="color:var(--color-text-muted);">Avg. columns / table</span><span style="font-weight:600;">8.4</span>
+            <span style="color:var(--color-text-muted);">Merged cell ratio</span><span style="font-weight:600;">98.3%</span>
+            <span style="color:var(--color-text-muted);">Avg. merged cells</span><span style="font-weight:600;">70.6</span>
+            <span style="color:var(--color-text-muted);">Avg. total cells</span><span style="font-weight:600;">89.8</span>
           </div>
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COMPLEXITY QUANTIFICATION (BiSC-Quant)
+     ============================================================ -->
+<section class="benchmark" id="complexity" style="background:var(--color-bg);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">📐 Complexity Quantification</span>
+      <h2>BiSC-Quant: Bi-dimensional Structure &amp; Content Quantifier</h2>
+      <p>
+        We propose <strong>BiSC-Quant</strong>, a standardized framework that jointly quantifies
+        table complexity along two orthogonal dimensions — enabling fair cross-benchmark comparison.
+      </p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:40px;">
+      <!-- Structural Irregularity -->
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:28px;">
+        <h3 style="color:var(--color-primary);margin-bottom:16px;">Structural Irregularity</h3>
+        <p style="font-size:.9rem;color:var(--color-text-muted);margin-bottom:20px;">
+          Quantifies deviation from a canonical grid: merged cells, nested headers, multi-line entries, and missing headers — all of which invalidate coordinate-based indexing.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--color-bg);border-radius:var(--radius-sm);font-size:.88rem;">
+            <span><strong>MCR</strong> — Merged Cell Ratio</span>
+            <span style="color:var(--color-primary);font-weight:700;">0.31</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--color-bg);border-radius:var(--radius-sm);font-size:.88rem;">
+            <span><strong>MCS</strong> — Merged Cell Span</span>
+            <span style="color:var(--color-primary);font-weight:700;">1.29</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--color-bg);border-radius:var(--radius-sm);font-size:.88rem;">
+            <span><strong>HDI</strong> — Header Depth Index</span>
+            <span style="color:var(--color-primary);font-weight:700;">3.91</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:linear-gradient(90deg,#eff6ff,#f0fdf4);border:1px solid #bfdbfe;border-radius:var(--radius-sm);font-size:.92rem;font-weight:700;">
+            <span>Total Structural Score</span>
+            <span style="color:var(--color-primary);">5.51</span>
+          </div>
+          <p style="font-size:.78rem;color:var(--color-text-muted);">vs. WTQ: 2.54 &nbsp;|&nbsp; InfoTabs: 2.17 — CoTabBench is <strong>2× more structurally complex</strong></p>
+        </div>
+      </div>
+
+      <!-- Content Heterogeneity -->
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:28px;">
+        <h3 style="color:var(--color-secondary);margin-bottom:16px;">Content Heterogeneity</h3>
+        <p style="font-size:.9rem;color:var(--color-text-muted);margin-bottom:20px;">
+          LLM-judged (Qwen-Plus-Latest, scored 1–5 per axis): cell content complexity, data type diversity, and semantic/domain complexity.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--color-bg);border-radius:var(--radius-sm);font-size:.88rem;">
+            <span><strong>CCC</strong> — Cell Content Complexity</span>
+            <span style="color:var(--color-secondary);font-weight:700;">3.00</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--color-bg);border-radius:var(--radius-sm);font-size:.88rem;">
+            <span><strong>DTD</strong> — Data Type Diversity</span>
+            <span style="color:var(--color-secondary);font-weight:700;">2.52</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--color-bg);border-radius:var(--radius-sm);font-size:.88rem;">
+            <span><strong>SDC</strong> — Semantic &amp; Domain Complexity</span>
+            <span style="color:var(--color-secondary);font-weight:700;">4.47</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:linear-gradient(90deg,#faf5ff,#eff6ff);border:1px solid #c4b5fd;border-radius:var(--radius-sm);font-size:.92rem;font-weight:700;">
+            <span>Total Heterogeneity Score</span>
+            <span style="color:var(--color-secondary);">9.99</span>
+          </div>
+          <p style="font-size:.78rem;color:var(--color-text-muted);">vs. WTQ: 8.23 &nbsp;|&nbsp; InfoTabs: 8.34 — CoTabBench covers <strong>all 6 content type categories</strong> (T, L, N, C, F, S)</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:20px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div style="font-size:2rem;">✅</div>
+      <div>
+        <strong>Human Alignment Validation</strong>
+        <p style="margin:4px 0 0;font-size:.9rem;color:var(--color-text-muted);">
+          Five annotators labeled 200 randomly sampled QA instances using the same BiSC-Quant criteria.
+          Per-metric Pearson correlation with automatic scorer: &gt;0.98. Overall correlation: <strong>0.973</strong>.
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -425,10 +527,10 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
   <div class="container">
     <div class="section-header">
       <span class="section-label">🗂️ CoTabInstruct</span>
-      <h2>Instruction-Tuning Dataset</h2>
+      <h2>Instruction-Tuning Corpus</h2>
       <p>
-        A large-scale dataset of multi-turn conversations grounded in real tables,
-        designed for supervised fine-tuning of language models on collaborative table tasks.
+        A large-scale training corpus built from the same dual-source pipeline as CoTabBench,
+        strictly partitioned so no training table appears in the evaluation set.
       </p>
     </div>
 
@@ -436,33 +538,20 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
       <!-- Left: visual example -->
       <div class="instruct-visual">
         <div class="instruct-code-block">
-<span class="code-comment">// CoTabInstruct — conversation example</span>
+<span class="code-comment">// CoTabInstruct — QA pair example</span>
 {
-  <span class="code-key">"table_id"</span><span class="code-punct">:</span> <span class="code-string">"finance_q3_report_042"</span><span class="code-punct">,</span>
-  <span class="code-key">"domain"</span><span class="code-punct">:</span> <span class="code-string">"finance"</span><span class="code-punct">,</span>
-  <span class="code-key">"num_turns"</span><span class="code-punct">:</span> <span class="code-value">6</span><span class="code-punct">,</span>
-  <span class="code-key">"conversation"</span><span class="code-punct">: [</span>
-    {
-      <span class="code-key">"role"</span><span class="code-punct">:</span> <span class="code-string">"user"</span><span class="code-punct">,</span>
-      <span class="code-key">"content"</span><span class="code-punct">:</span> <span class="code-string">"What was the total revenue
-        in Q3 for the APAC region?"</span>
-    },
-    {
-      <span class="code-key">"role"</span><span class="code-punct">:</span> <span class="code-string">"assistant"</span><span class="code-punct">,</span>
-      <span class="code-key">"content"</span><span class="code-punct">:</span> <span class="code-string">"The APAC region reported
-        $4.2B in Q3 revenue..."</span><span class="code-punct">,</span>
-      <span class="code-key">"grounding"</span><span class="code-punct">: {</span>
-        <span class="code-key">"rows"</span><span class="code-punct">:</span> <span class="code-value">[3, 4, 5]</span><span class="code-punct">,</span>
-        <span class="code-key">"cols"</span><span class="code-punct">:</span> <span class="code-value">["Q3_revenue"]</span>
-      <span class="code-punct">}</span>
-    },
-    {
-      <span class="code-key">"role"</span><span class="code-punct">:</span> <span class="code-string">"user"</span><span class="code-punct">,</span>
-      <span class="code-key">"content"</span><span class="code-punct">:</span> <span class="code-string">"How does that compare
-        to the prior quarter?"</span>
-    }
-    <span class="code-comment">// ... 3 more turns</span>
-  <span class="code-punct">]</span>
+  <span class="code-key">"table_id"</span><span class="code-punct">:</span> <span class="code-string">"arxiv_cs_table_1847"</span><span class="code-punct">,</span>
+  <span class="code-key">"source"</span><span class="code-punct">:</span> <span class="code-string">"latex"</span><span class="code-punct">,</span>
+  <span class="code-key">"domain"</span><span class="code-punct">:</span> <span class="code-string">"science"</span><span class="code-punct">,</span>
+  <span class="code-key">"task"</span><span class="code-punct">:</span> <span class="code-string">"table_qa"</span><span class="code-punct">,</span>
+  <span class="code-key">"question"</span><span class="code-punct">:</span> <span class="code-string">"What is the F1 score of
+    Model A on the hard subset?"</span><span class="code-punct">,</span>
+  <span class="code-key">"answer"</span><span class="code-punct">:</span> <span class="code-string">"68.4"</span><span class="code-punct">,</span>
+  <span class="code-key">"verification"</span><span class="code-punct">: {</span>
+    <span class="code-key">"dual_path_consistent"</span><span class="code-punct">:</span> <span class="code-value">true</span><span class="code-punct">,</span>
+    <span class="code-key">"validator_passed"</span><span class="code-punct">:</span> <span class="code-value">true</span><span class="code-punct">,</span>
+    <span class="code-key">"human_verified"</span><span class="code-punct">:</span> <span class="code-value">true</span>
+  <span class="code-punct">}</span>
 }
         </div>
       </div>
@@ -470,46 +559,46 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
       <!-- Right: description -->
       <div>
         <p style="font-size:1.05rem;color:#334155;line-height:1.85;margin-bottom:20px;">
-          CoTabInstruct was constructed by combining three complementary sources: (1) expert-authored
-          conversations collected via a dedicated annotation platform, (2) augmented conversations
-          generated using a pipeline of large-scale table-text alignment, and (3) adversarially
-          filtered synthetic data targeting model weaknesses identified through preliminary
-          evaluation on CoTabBench.
+          CoTabInstruct is generated by the same multi-agent annotation framework as CoTabBench.
+          Tables are sourced via dual-pronged collection: LaTeX tables from the DocGenome
+          dataset (ArXiv scientific literature) and HTML tables via recursive web crawling
+          across 10 domains. All tables pass the same rigorous rule-based and model-based
+          filtering pipeline before QA generation.
         </p>
         <p style="font-size:1.05rem;color:#334155;line-height:1.85;margin-bottom:28px;">
-          Each conversation includes grounding annotations that specify the exact table cells
-          referenced in each response, enabling models to learn precise grounding alongside
-          fluent generation. The dataset is provided with train/validation/test splits aligned
-          to the CoTabBench evaluation protocol.
+          QA pairs are generated and verified through a dual-path consistency check — two
+          independent answer paths must agree; discrepancies escalate to Multi-LLM Voting
+          (DeepSeek-R1 + Gemini 2.5 Flash). A 10% random sample (3,265 examples) was manually
+          reviewed by annotators.
         </p>
 
         <div class="instruct-points">
           <div class="instruct-point">
             <span class="point-num">1</span>
             <div class="point-text">
-              <strong>Expert-authored conversations</strong>
-              <span>~25,000 high-quality sessions curated by domain specialists with cell-level grounding annotations</span>
+              <strong>Dual-source table collection</strong>
+              <span>LaTeX tables from DocGenome (ArXiv) + HTML tables from large-scale recursive web crawling across 10 domains</span>
             </div>
           </div>
           <div class="instruct-point">
             <span class="point-num">2</span>
             <div class="point-text">
-              <strong>Augmented multi-turn data</strong>
-              <span>~45,000 conversations expanded from single-turn table QA pairs using a controlled generation pipeline</span>
+              <strong>Five-agent annotation framework</strong>
+              <span>Question Generator, Question Filter, Extractor, Answer Generator, and Validator — all powered by Qwen-Plus-Thinking</span>
             </div>
           </div>
           <div class="instruct-point">
             <span class="point-num">3</span>
             <div class="point-text">
-              <strong>Adversarial examples</strong>
-              <span>~15,000 targeted hard examples designed to expose multi-turn consistency and numerical reasoning failures</span>
+              <strong>Multi-dimensional automated validation</strong>
+              <span>Data Consistency, Hierarchical Consistency, and Numerical Consistency checks (Python assert execution for math)</span>
             </div>
           </div>
           <div class="instruct-point">
             <span class="point-num">4</span>
             <div class="point-text">
-              <strong>Preference pairs for alignment</strong>
-              <span>10,000+ preference-labeled response pairs for DPO-based preference alignment training</span>
+              <strong>Strict train/test partition</strong>
+              <span>11,096 training tables and 32,645 QA pairs — no overlap with the 2,717 CoTabBench test tables</span>
             </div>
           </div>
         </div>
@@ -525,10 +614,10 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
   <div class="container">
     <div class="section-header">
       <span class="section-label">🤖 CoTabLLM</span>
-      <h2>Fine-tuned Open-Source Model</h2>
+      <h2>Fine-tuned Open-Source Models</h2>
       <p>
-        A 7B-parameter open-source model fine-tuned on CoTabInstruct, achieving performance
-        competitive with frontier closed-source systems on CoTabBench.
+        A series of models at 7B and 8B scales fine-tuned on CoTabInstruct via SFT+LoRA,
+        serving as strong baselines for complex table understanding.
       </p>
     </div>
 
@@ -536,87 +625,87 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
       <!-- Left: description -->
       <div>
         <p style="font-size:1.05rem;color:#334155;line-height:1.85;margin-bottom:20px;">
-          CoTabLLM is initialized from a strong open-source base model and trained using a
-          two-stage recipe: supervised fine-tuning (SFT) on all 85K CoTabInstruct conversations,
-          followed by Direct Preference Optimization (DPO) on the 10K preference pairs. This
-          training approach teaches the model to produce accurate, grounded, and contextually
-          coherent responses across all five CoTabBench task types.
+          CoTabLLM is fine-tuned using SFT+LoRA on CoTabInstruct (batch size 16, max sequence
+          length 4096). Two base models are used: <strong>Qwen2.5-7B-Instruct</strong> (CoTabLLM-7B)
+          and <strong>LLaMA3-8B-Instruct</strong> (CoTabLLM-8B). Both models are trained only
+          on the CoTabInstruct training split with no exposure to CoTabBench test tables.
         </p>
         <p style="font-size:1.05rem;color:#334155;line-height:1.85;margin-bottom:28px;">
-          Despite its substantially smaller parameter count compared to GPT-4o and Claude 3.5 Sonnet,
-          CoTabLLM achieves an overall benchmark score of <strong>68.4</strong>, placing it
-          third on the CoTabBench leaderboard — outperforming Gemini 1.5 Pro (67.9) and GPT-4
-          Turbo (65.2). This demonstrates that targeted instruction tuning on high-quality
-          collaborative table data can substantially close the capability gap between
-          open-source and proprietary models for this task family.
+          Despite their small parameter count, CoTabLLM models surpass considerably larger
+          general-purpose models on CoTabBench. CoTabLLM-7B achieves <strong>57.3</strong>
+          overall — outperforming GPT-5.4 (54.0), Qwen-Plus-Latest (55.2), and
+          DeepSeek-V3 (54.4). This demonstrates that <em>targeted domain adaptation on
+          CoTabInstruct is more effective than raw model scale</em> for complex table understanding.
+          CoTabLLM-7B also achieves the best Hallucination Detection score of <strong>78.6</strong>
+          across all evaluated models.
         </p>
 
         <div class="llm-training-info">
-          <h4>Training Pipeline</h4>
+          <h4>Training Configuration</h4>
           <div class="training-step">
             <span class="step-dot"></span>
             <div class="step-content">
-              <strong>Stage 1 — Supervised Fine-Tuning (SFT)</strong>
-              <span>Full-parameter SFT on 85K CoTabInstruct conversations; 3 epochs on 8×A100 GPUs; lr = 2e-5 with cosine decay</span>
+              <strong>CoTabLLM-7B — based on Qwen2.5-7B-Instruct</strong>
+              <span>SFT+LoRA on CoTabInstruct; batch size 16; max seq length 4096</span>
             </div>
           </div>
           <div class="training-step">
             <span class="step-dot"></span>
             <div class="step-content">
-              <strong>Stage 2 — Direct Preference Optimization (DPO)</strong>
-              <span>DPO training on 10K preference pairs; β = 0.1; 1 epoch; focuses on grounding accuracy and factual precision</span>
+              <strong>CoTabLLM-8B — based on LLaMA3-8B-Instruct</strong>
+              <span>Same SFT+LoRA recipe; identical training configuration for fair comparison</span>
             </div>
           </div>
           <div class="training-step">
             <span class="step-dot"></span>
             <div class="step-content">
-              <strong>Table-aware Tokenization</strong>
-              <span>Row/column separator tokens injected during tokenization to improve structural awareness of tabular inputs</span>
+              <strong>Training Data: CoTabInstruct</strong>
+              <span>32,645 QA pairs across 11,096 tables — strictly disjoint from the evaluation set</span>
             </div>
           </div>
           <div class="training-step">
             <span class="step-dot"></span>
             <div class="step-content">
-              <strong>Context Window Extension</strong>
-              <span>Extended context window to 16K tokens via RoPE scaling to handle long multi-turn sessions with large tables</span>
+              <strong>Comparison with Specialist Models</strong>
+              <span>Outperforms TableGPT2-7B (31.7 overall) and TableLLM-Qwen2-7B (10.9 overall) by large margins</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right: metrics -->
+      <!-- Right: metrics (CoTabLLM-7B scores from paper) -->
       <div class="llm-metrics">
         <div class="metric-card">
-          <div class="metric-val metric-val--blue">68.4</div>
-          <div class="metric-lbl">Overall Score</div>
+          <div class="metric-val metric-val--blue">57.3</div>
+          <div class="metric-lbl">Overall (7B)</div>
         </div>
         <div class="metric-card">
-          <div class="metric-val metric-val--up">73.1</div>
-          <div class="metric-lbl">Table QA</div>
+          <div class="metric-val metric-val--up">57.1</div>
+          <div class="metric-lbl">Row/Col Counting</div>
         </div>
         <div class="metric-card">
-          <div class="metric-val metric-val--purple">80.5</div>
-          <div class="metric-lbl">Cell Lookup</div>
+          <div class="metric-val metric-val--purple">36.1</div>
+          <div class="metric-lbl">TableQA</div>
         </div>
         <div class="metric-card">
-          <div class="metric-val metric-val--warm">65.2</div>
-          <div class="metric-lbl">Summarization</div>
+          <div class="metric-val metric-val--warm">78.6</div>
+          <div class="metric-lbl">Hallucination Det. ★</div>
         </div>
         <div class="metric-card">
-          <div class="metric-val metric-val--blue">61.7</div>
-          <div class="metric-lbl">Multi-turn Dialog</div>
+          <div class="metric-val metric-val--blue">51.5</div>
+          <div class="metric-lbl">Overall (8B)</div>
         </div>
         <div class="metric-card">
-          <div class="metric-val metric-val--up">#3</div>
-          <div class="metric-lbl">Leaderboard Rank</div>
+          <div class="metric-val metric-val--up">&gt;GPT-5.4</div>
+          <div class="metric-lbl">Outperforms</div>
         </div>
         <div class="metric-card">
-          <div class="metric-val metric-val--purple">7B</div>
+          <div class="metric-val metric-val--purple">7B / 8B</div>
           <div class="metric-lbl">Parameters</div>
         </div>
         <div class="metric-card">
           <div class="metric-val metric-val--up">Open</div>
-          <div class="metric-lbl">Source Model</div>
+          <div class="metric-lbl">Source</div>
         </div>
       </div>
     </div>
@@ -631,90 +720,134 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
     <div class="section-header">
       <span class="section-label">💾 Download</span>
       <h2>Dataset &amp; Model Access</h2>
+      {% if site.links.dataset_bench != "" or site.links.dataset_instruct != "" or site.links.model_weights != "" or site.links.eval_toolkit != "" %}
+      <p>Resources are now publicly available. Click the links below to download.</p>
+      {% else %}
       <p>
-        All resources will be released on HuggingFace Hub under a permissive research license
-        upon paper acceptance. Preview versions are available for reviewers.
+        All resources will be released upon paper acceptance. Links will be updated here.
+        Resources are withheld during anonymous review.
       </p>
+      {% endif %}
     </div>
 
     <div class="download-grid">
 
       <div class="download-card">
         <div class="download-icon">📊</div>
-        <div>
+        <div class="download-card-body">
           <h3>CoTabBench Evaluation Set</h3>
           <p>
-            The full benchmark: 6,680 instances across 5 task types and 12 domains, with
-            gold answers, table data, conversation history, and evaluation scripts.
+            2,717 tables and 8,609 QA pairs across 3 task types and 10 domains.
+            Each table provided as LaTeX/HTML markup and rendered image.
+            Includes gold answers and evaluation scripts.
           </p>
         </div>
         <div class="download-meta">
-          <span class="meta-chip">JSON</span>
-          <span class="meta-chip">~2.1 GB</span>
-          <span class="meta-chip">CC BY 4.0</span>
+          <span class="meta-chip">JSON + Images</span>
+          <span class="meta-chip">10 Domains</span>
+          {% if site.links.dataset_bench != "" %}
+          <span class="meta-chip meta-chip--ready">Available</span>
+          {% else %}
+          <span class="meta-chip">Coming Soon</span>
+          {% endif %}
         </div>
-        <a href="https://huggingface.co/datasets/anonymous/cotabbench" class="download-btn" target="_blank" rel="noopener noreferrer">
-          🤗 View on HuggingFace
+        {% if site.links.dataset_bench != "" %}
+        <a href="{{ site.links.dataset_bench }}" class="download-btn" target="_blank" rel="noopener noreferrer">
+          ↓ Download
         </a>
+        {% else %}
+        <span class="download-btn" style="opacity:0.5;cursor:default;">
+          🤗 Available after review
+        </span>
+        {% endif %}
       </div>
 
       <div class="download-card">
         <div class="download-icon">🗂️</div>
-        <div>
-          <h3>CoTabInstruct Training Data</h3>
+        <div class="download-card-body">
+          <h3>CoTabInstruct Training Corpus</h3>
           <p>
-            85,000+ multi-turn instruction-following conversations with cell-level grounding
-            annotations. Includes train/validation/test splits and data documentation.
+            32,645 QA pairs across 11,096 tables from the same dual-source pipeline.
+            Strictly disjoint from the CoTabBench test set.
+            Enables fine-tuning for structural and content challenges in real-world tables.
           </p>
         </div>
         <div class="download-meta">
-          <span class="meta-chip">JSON</span>
-          <span class="meta-chip">~8.4 GB</span>
-          <span class="meta-chip">CC BY 4.0</span>
+          <span class="meta-chip">JSON + Images</span>
+          <span class="meta-chip">11,096 Tables</span>
+          {% if site.links.dataset_instruct != "" %}
+          <span class="meta-chip meta-chip--ready">Available</span>
+          {% else %}
+          <span class="meta-chip">Coming Soon</span>
+          {% endif %}
         </div>
-        <a href="https://huggingface.co/datasets/anonymous/cotabinstruct" class="download-btn" target="_blank" rel="noopener noreferrer">
-          🤗 View on HuggingFace
+        {% if site.links.dataset_instruct != "" %}
+        <a href="{{ site.links.dataset_instruct }}" class="download-btn" target="_blank" rel="noopener noreferrer">
+          ↓ Download
         </a>
+        {% else %}
+        <span class="download-btn" style="opacity:0.5;cursor:default;">
+          🤗 Available after review
+        </span>
+        {% endif %}
       </div>
 
       <div class="download-card">
         <div class="download-icon">🤖</div>
-        <div>
+        <div class="download-card-body">
           <h3>CoTabLLM Model Weights</h3>
           <p>
-            Full model weights for CoTabLLM (7B parameters), including the SFT checkpoint
-            and the DPO-aligned final checkpoint. Compatible with HuggingFace Transformers.
+            Model weights for CoTabLLM-7B (Qwen2.5-7B-Instruct + SFT+LoRA) and
+            CoTabLLM-8B (LLaMA3-8B-Instruct + SFT+LoRA).
+            Compatible with HuggingFace Transformers.
           </p>
         </div>
         <div class="download-meta">
           <span class="meta-chip">SafeTensors</span>
-          <span class="meta-chip">~14 GB</span>
-          <span class="meta-chip">Apache 2.0</span>
+          <span class="meta-chip">7B &amp; 8B</span>
+          {% if site.links.model_weights != "" %}
+          <span class="meta-chip meta-chip--ready">Available</span>
+          {% else %}
+          <span class="meta-chip">Coming Soon</span>
+          {% endif %}
         </div>
-        <a href="https://huggingface.co/anonymous/cotabllm" class="download-btn" target="_blank" rel="noopener noreferrer">
-          🤗 View on HuggingFace
+        {% if site.links.model_weights != "" %}
+        <a href="{{ site.links.model_weights }}" class="download-btn" target="_blank" rel="noopener noreferrer">
+          ↓ Download
         </a>
+        {% else %}
+        <span class="download-btn" style="opacity:0.5;cursor:default;">
+          🤗 Available after review
+        </span>
+        {% endif %}
       </div>
 
       <div class="download-card">
         <div class="download-icon">🛠️</div>
-        <div>
-          <h3>Evaluation Toolkit</h3>
+        <div class="download-card-body">
+          <h3>Evaluation Toolkit &amp; Code</h3>
           <p>
-            Python package for running standardized CoTabBench evaluation on any model.
-            Includes metric implementations, prompt templates, and result visualization tools.
+            Code for evaluation pipeline, BiSC-Quant complexity scoring,
+            multi-agent annotation framework, and prompt templates used in experiments.
           </p>
         </div>
         <div class="download-meta">
           <span class="meta-chip">Python</span>
-          <span class="meta-chip">MIT License</span>
+          {% if site.links.eval_toolkit != "" %}
+          <span class="meta-chip meta-chip--ready">Available</span>
+          {% else %}
+          <span class="meta-chip">Coming Soon</span>
+          {% endif %}
         </div>
-        <a href="https://github.com/anonymous/cotabbench" class="download-btn" target="_blank" rel="noopener noreferrer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-          </svg>
-          View on GitHub
+        {% if site.links.eval_toolkit != "" %}
+        <a href="{{ site.links.eval_toolkit }}" class="download-btn" target="_blank" rel="noopener noreferrer">
+          ↗ View Code
         </a>
+        {% else %}
+        <span class="download-btn" style="opacity:0.5;cursor:default;">
+          GitHub — Available after review
+        </span>
+        {% endif %}
       </div>
 
     </div>
@@ -745,12 +878,12 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
           Copy
         </button>
       </div>
-      <div class="citation-code" id="bibtexContent"><span class="bib-brace">@inproceedings{</span><span class="bib-key">anonymous2025cotabbench</span><span class="bib-brace">,</span>
-  <span class="bib-field">title</span>     = <span class="bib-brace">{</span><span class="bib-value">CoTabBench: A Comprehensive Benchmark for
-             Collaborative Table Understanding</span><span class="bib-brace">},</span>
+      <div class="citation-code" id="bibtexContent"><span class="bib-brace">@inproceedings{</span><span class="bib-key">anonymous2026cotabbench</span><span class="bib-brace">,</span>
+  <span class="bib-field">title</span>     = <span class="bib-brace">{</span><span class="bib-value">CoTabBench: A Real-World Complex Benchmark for
+             Question Answering over Tables with Structural
+             Irregularity and Content Heterogeneity</span><span class="bib-brace">},</span>
   <span class="bib-field">author</span>    = <span class="bib-brace">{</span><span class="bib-value">Anonymous Authors</span><span class="bib-brace">},</span>
-  <span class="bib-field">booktitle</span> = <span class="bib-brace">{</span><span class="bib-value">Advances in Neural Information Processing Systems</span><span class="bib-brace">},</span>
-  <span class="bib-field">year</span>      = <span class="bib-brace">{</span><span class="bib-value">2025</span><span class="bib-brace">},</span>
+  <span class="bib-field">year</span>      = <span class="bib-brace">{</span><span class="bib-value">2026</span><span class="bib-brace">},</span>
   <span class="bib-field">note</span>      = <span class="bib-brace">{</span><span class="bib-value">Under review. Anonymous submission.</span><span class="bib-brace">},</span>
   <span class="bib-field">url</span>       = <span class="bib-brace">{</span><span class="bib-value">https://cotabbench.github.io</span><span class="bib-brace">}</span>
 <span class="bib-brace">}</span></div>
@@ -764,14 +897,14 @@ description: "CoTabBench is the first large-scale benchmark designed to evaluate
     var btn = document.getElementById('copyBibtex');
     if (!btn) return;
     btn.addEventListener('click', function () {
-      var raw = `@inproceedings{anonymous2025cotabbench,
-  title     = {CoTabBench: A Comprehensive Benchmark for
-               Collaborative Table Understanding},
-  author    = {Anonymous Authors},
-  booktitle = {Advances in Neural Information Processing Systems},
-  year      = {2025},
-  note      = {Under review. Anonymous submission.},
-  url       = {https://cotabbench.github.io}
+      var raw = `@inproceedings{anonymous2026cotabbench,
+  title  = {CoTabBench: A Real-World Complex Benchmark for
+            Question Answering over Tables with Structural
+            Irregularity and Content Heterogeneity},
+  author = {Anonymous Authors},
+  year   = {2026},
+  note   = {Under review. Anonymous submission.},
+  url    = {https://cotabbench.github.io}
 }`;
       navigator.clipboard.writeText(raw).then(function () {
         btn.textContent = '✓ Copied!';

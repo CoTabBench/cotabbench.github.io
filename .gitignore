@@ -1,0 +1,26 @@
+# Jekyll build output (GitHub Pages builds this automatically)
+_site/
+
+# Jekyll cache
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Dependency lock (GitHub Pages manages its own gem environment)
+Gemfile.lock
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / editor
+.claude/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs & temp
+*.log
+tmp/
