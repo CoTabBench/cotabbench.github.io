@@ -1,144 +1,157 @@
 /**
  * CoTabBench Leaderboard — Vanilla JS
- * Handles column sorting and open/closed source filtering.
+ *
+ * Table td indices:  0:Rank  1:Model  2:Type  3:Overall  4:Counting  5:TableQA  6:Hall.Detect
+ * Score data lives on <tr> as data-* attributes:
+ *   data-ovr-avg / data-ovr-e / data-ovr-h
+ *   data-cnt-avg / data-cnt-e / data-cnt-h
+ *   data-qa-avg  / data-qa-e  / data-qa-h
+ *   data-hall-avg/ data-hall-e/ data-hall-h
  */
 
-(function () {
+document.addEventListener("DOMContentLoaded", function () {
   "use strict";
 
   /* ------------------------------------------------------------------ */
   /* State                                                                */
   /* ------------------------------------------------------------------ */
-  var currentSort  = { col: 1, dir: "desc" }; // default: Overall score desc
-  var currentFilter = "all"; // "all" | "open" | "closed"
+  var sortCol   = 3;       // Overall col index
+  var sortDir   = "desc";
+  var filter    = "all";   // "all" | "llm" | "mllm" | "finetuned"
+  var diff      = "avg";   // "avg" | "easy" | "hard"
 
   /* ------------------------------------------------------------------ */
-  /* Data                                                                 */
+  /* DOM references                                                       */
   /* ------------------------------------------------------------------ */
-  var rows = Array.from(document.querySelectorAll("#lbBody tr[data-open]"));
+  var tbody = document.getElementById("lbBody");
+  if (!tbody) return;
+
+  var allRows = Array.from(tbody.querySelectorAll("tr[data-type]"));
+  if (!allRows.length) return;
+
+  var SCORE_COLS = [
+    { idx: 3, key: "ovr"  },
+    { idx: 4, key: "cnt"  },
+    { idx: 5, key: "qa"   },
+    { idx: 6, key: "hall" },
+  ];
 
   /* ------------------------------------------------------------------ */
-  /* Sorting                                                              */
+  /* Core render — always runs all three steps in order                  */
   /* ------------------------------------------------------------------ */
-  function getCellValue(row, colIndex) {
+  function render() {
+    // 1. Determine visibility for each row
+    allRows.forEach(function (row) {
+      var type = row.getAttribute("data-type") || "";
+      var show;
+      switch (filter) {
+        case "llm":       show = type === "closed-llm"  || type === "open-llm";  break;
+        case "mllm":      show = type === "closed-mllm" || type === "open-mllm"; break;
+        case "finetuned": show = type === "finetuned";                           break;
+        default:          show = true;
+      }
+      row.style.display = show ? "" : "none";
+    });
+
+    // 2. Update score cells to reflect current difficulty
+    var sfx = diff === "easy" ? "e" : diff === "hard" ? "h" : "avg";
+    allRows.forEach(function (row) {
+      var cells = row.querySelectorAll("td");
+      SCORE_COLS.forEach(function (col) {
+        var td = cells[col.idx];
+        if (!td) return;
+        var val = row.getAttribute("data-" + col.key + "-" + sfx) || "—";
+        td.setAttribute("data-value", val);
+        td.textContent = val;
+      });
+    });
+
+    // 3. Sort visible rows (move hidden rows to bottom without showing them)
+    var visible = allRows.filter(function (r) { return r.style.display !== "none"; });
+    var hidden  = allRows.filter(function (r) { return r.style.display === "none"; });
+
+    visible.sort(function (a, b) {
+      var va = getVal(a, sortCol);
+      var vb = getVal(b, sortCol);
+      var na = parseFloat(va), nb = parseFloat(vb);
+      if (!isNaN(na) && !isNaN(nb)) return sortDir === "asc" ? na - nb : nb - na;
+      return sortDir === "asc" ? va.localeCompare(vb) : vb.localeCompare(va);
+    });
+
+    visible.concat(hidden).forEach(function (row) { tbody.appendChild(row); });
+
+    // 4. Assign ranks to visible rows in order
+    visible.forEach(function (row, i) {
+      var cell = row.querySelector(".rank-cell");
+      if (!cell) return;
+      var n = i + 1;
+      if      (n === 1) cell.innerHTML = "<span class='rank-medal rank-medal--1'>1</span>";
+      else if (n === 2) cell.innerHTML = "<span class='rank-medal rank-medal--2'>2</span>";
+      else if (n === 3) cell.innerHTML = "<span class='rank-medal rank-medal--3'>3</span>";
+      else              cell.innerHTML = "<span class='rank-medal rank-medal--n'>" + n + "</span>";
+    });
+
+    // 5. Update count badge
+    var el = document.getElementById("lbCount");
+    if (el) el.textContent = "Showing " + visible.length + " of " + allRows.length + " models";
+  }
+
+  function getVal(row, colIndex) {
     var cells = row.querySelectorAll("td");
     if (!cells[colIndex]) return "";
     var raw = cells[colIndex].getAttribute("data-value");
-    if (raw !== null) return raw;
-    return cells[colIndex].textContent.trim();
-  }
-
-  function sortRows(colIndex, dir) {
-    var tbody = document.getElementById("lbBody");
-    var sorted = rows.slice().sort(function (a, b) {
-      var va = getCellValue(a, colIndex);
-      var vb = getCellValue(b, colIndex);
-      var na = parseFloat(va);
-      var nb = parseFloat(vb);
-      if (!isNaN(na) && !isNaN(nb)) {
-        return dir === "asc" ? na - nb : nb - na;
-      }
-      return dir === "asc"
-        ? va.localeCompare(vb)
-        : vb.localeCompare(va);
-    });
-
-    /* Re-append in sorted order */
-    sorted.forEach(function (row) { tbody.appendChild(row); });
-
-    /* Update rank numbers */
-    updateVisibleRanks();
-  }
-
-  function updateVisibleRanks() {
-    var visible = rows.filter(function (r) {
-      return r.style.display !== "none";
-    });
-    visible.forEach(function (row, i) {
-      var rankCell = row.querySelector(".rank-cell");
-      if (!rankCell) return;
-      var n = i + 1;
-      if (n === 1) {
-        rankCell.innerHTML = "<span class='rank-medal rank-medal--1'>1</span>";
-      } else if (n === 2) {
-        rankCell.innerHTML = "<span class='rank-medal rank-medal--2'>2</span>";
-      } else if (n === 3) {
-        rankCell.innerHTML = "<span class='rank-medal rank-medal--3'>3</span>";
-      } else {
-        rankCell.innerHTML = "<span class='rank-medal rank-medal--n'>" + n + "</span>";
-      }
-    });
+    return raw !== null ? raw : cells[colIndex].textContent.trim();
   }
 
   /* ------------------------------------------------------------------ */
-  /* Column header click                                                  */
+  /* Column header sort                                                   */
   /* ------------------------------------------------------------------ */
   var headers = document.querySelectorAll(".lb-table th[data-col]");
 
   headers.forEach(function (th) {
     th.addEventListener("click", function () {
       var col = parseInt(th.getAttribute("data-col"), 10);
-      var dir;
-      if (currentSort.col === col) {
-        dir = currentSort.dir === "desc" ? "asc" : "desc";
-      } else {
-        dir = "desc";
-      }
-      currentSort = { col: col, dir: dir };
-
-      /* Update header classes */
-      headers.forEach(function (h) {
-        h.classList.remove("sort-asc", "sort-desc");
-      });
-      th.classList.add(dir === "asc" ? "sort-asc" : "sort-desc");
-
-      sortRows(col, dir);
+      sortDir = (sortCol === col && sortDir === "desc") ? "asc" : "desc";
+      sortCol = col;
+      headers.forEach(function (h) { h.classList.remove("sort-asc", "sort-desc"); });
+      th.classList.add(sortDir === "asc" ? "sort-asc" : "sort-desc");
+      render();
     });
   });
 
   /* ------------------------------------------------------------------ */
-  /* Filtering                                                            */
+  /* Type filter buttons                                                  */
   /* ------------------------------------------------------------------ */
-  var filterBtns = document.querySelectorAll(".filter-btn[data-filter]");
-
-  filterBtns.forEach(function (btn) {
+  document.querySelectorAll(".filter-btn[data-filter]").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      filterBtns.forEach(function (b) { b.classList.remove("active"); });
+      document.querySelectorAll(".filter-btn[data-filter]").forEach(function (b) {
+        b.classList.remove("active");
+      });
       btn.classList.add("active");
-
-      currentFilter = btn.getAttribute("data-filter");
-      applyFilter();
+      filter = btn.getAttribute("data-filter");
+      render();
     });
   });
 
-  function applyFilter() {
-    rows.forEach(function (row) {
-      var isOpen = row.getAttribute("data-open") === "true";
-      var show = true;
-      if (currentFilter === "open")   show = isOpen;
-      if (currentFilter === "closed") show = !isOpen;
-      row.style.display = show ? "" : "none";
+  /* ------------------------------------------------------------------ */
+  /* Difficulty buttons                                                   */
+  /* ------------------------------------------------------------------ */
+  document.querySelectorAll(".diff-btn[data-diff]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".diff-btn[data-diff]").forEach(function (b) {
+        b.classList.remove("active");
+      });
+      btn.classList.add("active");
+      diff = btn.getAttribute("data-diff");
+      render();
     });
-    updateVisibleRanks();
-    updateCount();
-  }
-
-  /* ------------------------------------------------------------------ */
-  /* Count display                                                        */
-  /* ------------------------------------------------------------------ */
-  function updateCount() {
-    var el = document.getElementById("lbCount");
-    if (!el) return;
-    var visible = rows.filter(function (r) { return r.style.display !== "none"; });
-    el.textContent = "Showing " + visible.length + " of " + rows.length + " models";
-  }
+  });
 
   /* ------------------------------------------------------------------ */
   /* Init                                                                 */
   /* ------------------------------------------------------------------ */
-  /* Mark default sorted column */
-  var defaultTh = document.querySelector(".lb-table th[data-col='1']");
+  var defaultTh = document.querySelector(".lb-table th[data-col='" + sortCol + "']");
   if (defaultTh) defaultTh.classList.add("sort-desc");
 
-  updateCount();
-})();
+  render();
+});

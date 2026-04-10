@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Leaderboard"
-description: "CoTabBench model leaderboard — ranked results for all evaluated LLMs on collaborative table understanding tasks."
+description: "CoTabBench model leaderboard — ranked results for all evaluated LLMs and MLLMs on three table understanding tasks."
 ---
 
 <!-- ============================================================
@@ -9,23 +9,21 @@ description: "CoTabBench model leaderboard — ranked results for all evaluated 
      ============================================================ -->
 <section class="leaderboard-hero">
   <div class="container">
-    <a href="{{ '/' | relative_url }}" class="back-link">
-      ← Back to Home
-    </a>
+    <a href="{{ '/' | relative_url }}" class="back-link">← Back to Home</a>
     <h1 style="margin-top:24px;">🏆 CoTabBench Leaderboard</h1>
     <p>
-      Ranked results for all evaluated language models on the CoTabBench benchmark.
-      Scores reflect performance across five collaborative table understanding task categories.
+      Ranked results for all evaluated models across three tasks:
+      Row &amp; Column Counting, Table QA, and Hallucination Detection.
     </p>
     <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:8px;">
       <span style="display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:#94a3b8;background:#1e293b;padding:5px 14px;border-radius:9999px;border:1px solid #334155;">
         📅 Last updated: April 2026
       </span>
       <span style="display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:#94a3b8;background:#1e293b;padding:5px 14px;border-radius:9999px;border:1px solid #334155;">
-        🧪 Evaluation: zero-shot, no CoT
+        🧪 Evaluation: zero-shot
       </span>
       <span style="display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:#94a3b8;background:#1e293b;padding:5px 14px;border-radius:9999px;border:1px solid #334155;">
-        📊 Models evaluated: 12
+        📊 Models evaluated: 38
       </span>
     </div>
   </div>
@@ -39,12 +37,30 @@ description: "CoTabBench model leaderboard — ranked results for all evaluated 
 
     <!-- Controls -->
     <div class="lb-controls">
-      <div class="lb-filters" role="group" aria-label="Filter models by source">
-        <button class="filter-btn active" data-filter="all">All Models</button>
-        <button class="filter-btn" data-filter="open">Open Source</button>
-        <button class="filter-btn" data-filter="closed">Closed Source</button>
+
+      <!-- Row 1: type filter + count -->
+      <div class="lb-controls-row">
+        <div class="lb-filters" role="group" aria-label="Filter by model type">
+          <button class="filter-btn active" data-filter="all">All Models</button>
+          <button class="filter-btn" data-filter="llm">LLMs</button>
+          <button class="filter-btn" data-filter="mllm">MLLMs</button>
+          <button class="filter-btn" data-filter="finetuned">Fine-tuned</button>
+        </div>
+        <span class="lb-meta" id="lbCount">Showing 38 of 38 models</span>
       </div>
-      <span class="lb-meta" id="lbCount">Showing 12 of 12 models</span>
+
+      <!-- Row 2: difficulty toggle -->
+      <div class="lb-controls-row">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <!-- <span class="lb-controls-label">Difficulty:</span> -->
+          <div class="lb-filters" role="group" aria-label="Select difficulty">
+            <button class="diff-btn active" data-diff="avg">Average</button>
+            <button class="diff-btn" data-diff="easy">Easy</button>
+            <button class="diff-btn" data-diff="hard">Hard</button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- Table -->
@@ -52,259 +68,571 @@ description: "CoTabBench model leaderboard — ranked results for all evaluated 
       <table class="lb-table" aria-label="CoTabBench model leaderboard">
         <thead>
           <tr>
-            <th data-col="0" aria-sort="none">Rank<span class="sort-icon"></span></th>
-            <th data-col="1" class="sort-desc" aria-sort="descending">Overall<span class="sort-icon"></span></th>
-            <th data-col="2" aria-sort="none">Model<span class="sort-icon"></span></th>
-            <th data-col="3" aria-sort="none">Table QA<span class="sort-icon"></span></th>
-            <th data-col="4" aria-sort="none">Cell Lookup<span class="sort-icon"></span></th>
-            <th data-col="5" aria-sort="none">Summarization<span class="sort-icon"></span></th>
-            <th data-col="6" aria-sort="none">Multi-turn<span class="sort-icon"></span></th>
-            <th data-col="7" aria-sort="none">Open Source<span class="sort-icon"></span></th>
+            <th style="cursor:default;width:56px;">Rank</th>
+            <th data-col="1" style="min-width:185px;">Model<span class="sort-icon"></span></th>
+            <th data-col="2">Type<span class="sort-icon"></span></th>
+            <th data-col="3" class="th-overall">Overall<span class="sort-icon"></span></th>
+            <th data-col="4" class="group-start">Counting<span class="sort-icon"></span></th>
+            <th data-col="5" class="group-start">Table QA<span class="sort-icon"></span></th>
+            <th data-col="6" class="group-start">Hall. Detect<span class="sort-icon"></span></th>
           </tr>
         </thead>
         <tbody id="lbBody">
 
-          <!-- Rank 1 — GPT-4o -->
-          <tr data-open="false">
-            <td class="rank-cell" data-value="1">
-              <span class="rank-medal rank-medal--1">1</span>
-            </td>
-            <td class="score-cell score-cell--overall" data-value="72.3">72.3</td>
-            <td class="model-cell">
-              <div class="model-name-wrap">GPT-4o</div>
-            </td>
-            <td class="score-cell" data-value="78.5">78.5</td>
-            <td class="score-cell" data-value="85.2">85.2</td>
-            <td class="score-cell" data-value="68.4">68.4</td>
-            <td class="score-cell" data-value="65.1">65.1</td>
-            <td>
-              <span class="open-badge open-badge--no">
-                🔒 No
-              </span>
-            </td>
+          <!-- ==========================================================
+               CLOSED-SOURCE LLMs
+               ========================================================== -->
+
+          <tr data-type="closed-llm"
+              data-ovr-avg="53.4" data-ovr-e="57.1" data-ovr-h="50.1"
+              data-cnt-avg="51.1" data-cnt-e="51.1" data-cnt-h="51.0"
+              data-qa-avg="47.6"  data-qa-e="54.7"  data-qa-h="41.4"
+              data-hall-avg="61.5" data-hall-e="65.4" data-hall-h="57.8">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">GPT-4.1</div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="53.4">53.4</td>
+            <td class="score-cell group-start" data-value="51.1">51.1</td>
+            <td class="score-cell group-start" data-value="47.6">47.6</td>
+            <td class="score-cell group-start" data-value="61.5">61.5</td>
           </tr>
 
-          <!-- Rank 2 — Claude 3.5 Sonnet -->
-          <tr data-open="false">
-            <td class="rank-cell" data-value="2">
-              <span class="rank-medal rank-medal--2">2</span>
-            </td>
-            <td class="score-cell score-cell--overall" data-value="70.8">70.8</td>
-            <td class="model-cell">
-              <div class="model-name-wrap">Claude 3.5 Sonnet</div>
-            </td>
-            <td class="score-cell" data-value="76.2">76.2</td>
-            <td class="score-cell" data-value="83.1">83.1</td>
-            <td class="score-cell" data-value="67.9">67.9</td>
-            <td class="score-cell" data-value="63.8">63.8</td>
-            <td>
-              <span class="open-badge open-badge--no">
-                🔒 No
-              </span>
-            </td>
+          <tr data-type="closed-llm"
+              data-ovr-avg="45.7" data-ovr-e="50.1" data-ovr-h="41.8"
+              data-cnt-avg="40.7" data-cnt-e="42.8" data-cnt-h="38.8"
+              data-qa-avg="41.7"  data-qa-e="48.8"  data-qa-h="35.3"
+              data-hall-avg="54.8" data-hall-e="58.8" data-hall-h="51.2">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">GPT-4.1-mini</div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="45.7">45.7</td>
+            <td class="score-cell group-start" data-value="40.7">40.7</td>
+            <td class="score-cell group-start" data-value="41.7">41.7</td>
+            <td class="score-cell group-start" data-value="54.8">54.8</td>
           </tr>
 
-          <!-- Rank 3 — CoTabLLM (Ours) -->
-          <tr data-open="true" class="row--ours">
-            <td class="rank-cell" data-value="3">
-              <span class="rank-medal rank-medal--3">3</span>
-            </td>
-            <td class="score-cell score-cell--overall" data-value="68.4">68.4</td>
-            <td class="model-cell">
-              <div class="model-name-wrap">
-                CoTabLLM
-                <span class="ours-badge">Ours</span>
-              </div>
-            </td>
-            <td class="score-cell" data-value="73.1">73.1</td>
-            <td class="score-cell" data-value="80.5">80.5</td>
-            <td class="score-cell" data-value="65.2">65.2</td>
-            <td class="score-cell" data-value="61.7">61.7</td>
-            <td>
-              <span class="open-badge open-badge--yes">
-                ✓ Yes
-              </span>
-            </td>
+          <tr data-type="closed-llm"
+              data-ovr-avg="42.4" data-ovr-e="45.2" data-ovr-h="39.8"
+              data-cnt-avg="50.0" data-cnt-e="49.7" data-cnt-h="50.2"
+              data-qa-avg="35.0"  data-qa-e="39.8"  data-qa-h="30.8"
+              data-hall-avg="42.1" data-hall-e="46.2" data-hall-h="38.3">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen-Turbo-Latest</div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="42.4">42.4</td>
+            <td class="score-cell group-start" data-value="50.0">50.0</td>
+            <td class="score-cell group-start" data-value="35.0">35.0</td>
+            <td class="score-cell group-start" data-value="42.1">42.1</td>
           </tr>
 
-          <!-- Rank 4 — Gemini 1.5 Pro -->
-          <tr data-open="false">
-            <td class="rank-cell" data-value="4">
-              <span class="rank-medal rank-medal--n">4</span>
-            </td>
-            <td class="score-cell score-cell--overall" data-value="67.9">67.9</td>
-            <td class="model-cell">
-              <div class="model-name-wrap">Gemini 1.5 Pro</div>
-            </td>
-            <td class="score-cell" data-value="72.8">72.8</td>
-            <td class="score-cell" data-value="79.4">79.4</td>
-            <td class="score-cell" data-value="64.8">64.8</td>
-            <td class="score-cell" data-value="60.2">60.2</td>
-            <td>
-              <span class="open-badge open-badge--no">
-                🔒 No
-              </span>
-            </td>
+          <tr data-type="closed-llm"
+              data-ovr-avg="55.2" data-ovr-e="59.3" data-ovr-h="51.5"
+              data-cnt-avg="52.1" data-cnt-e="54.0" data-cnt-h="50.4"
+              data-qa-avg="48.1"  data-qa-e="55.5"  data-qa-h="41.5"
+              data-hall-avg="65.3" data-hall-e="68.3" data-hall-h="62.5">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen-Plus-Latest</div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="55.2">55.2</td>
+            <td class="score-cell group-start" data-value="52.1">52.1</td>
+            <td class="score-cell group-start" data-value="48.1">48.1</td>
+            <td class="score-cell group-start" data-value="65.3">65.3</td>
           </tr>
 
-          <!-- Rank 5 — GPT-4 Turbo -->
-          <tr data-open="false">
-            <td class="rank-cell" data-value="5">
-              <span class="rank-medal rank-medal--n">5</span>
-            </td>
-            <td class="score-cell score-cell--overall" data-value="65.2">65.2</td>
-            <td class="model-cell">
-              <div class="model-name-wrap">GPT-4 Turbo</div>
-            </td>
-            <td class="score-cell" data-value="70.1">70.1</td>
-            <td class="score-cell" data-value="76.8">76.8</td>
-            <td class="score-cell" data-value="62.3">62.3</td>
-            <td class="score-cell" data-value="58.9">58.9</td>
-            <td>
-              <span class="open-badge open-badge--no">
-                🔒 No
-              </span>
-            </td>
+          <tr data-type="closed-llm"
+              data-ovr-avg="51.9" data-ovr-e="55.1" data-ovr-h="48.9"
+              data-cnt-avg="54.9" data-cnt-e="54.5" data-cnt-h="55.2"
+              data-qa-avg="49.6"  data-qa-e="55.8"  data-qa-h="44.2"
+              data-hall-avg="51.1" data-hall-e="55.1" data-hall-h="47.5">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Gemini 2.5 Flash</div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="51.9">51.9</td>
+            <td class="score-cell group-start" data-value="54.9">54.9</td>
+            <td class="score-cell group-start" data-value="49.6">49.6</td>
+            <td class="score-cell group-start" data-value="51.1">51.1</td>
           </tr>
 
-          <!-- Rank 6 — Qwen2.5 72B -->
-          <tr data-open="true">
-            <td class="rank-cell" data-value="6">
-              <span class="rank-medal rank-medal--n">6</span>
-            </td>
-            <td class="score-cell score-cell--overall" data-value="61.4">61.4</td>
-            <td class="model-cell">
-              <div class="model-name-wrap">Qwen2.5 72B</div>
-            </td>
-            <td class="score-cell" data-value="66.3">66.3</td>
-            <td class="score-cell" data-value="72.1">72.1</td>
-            <td class="score-cell" data-value="58.7">58.7</td>
-            <td class="score-cell" data-value="54.6">54.6</td>
-            <td>
-              <span class="open-badge open-badge--yes">
-                ✓ Yes
-              </span>
-            </td>
+          <tr data-type="closed-llm"
+              data-ovr-avg="63.4" data-ovr-e="66.6" data-ovr-h="60.6"
+              data-cnt-avg="66.5" data-cnt-e="65.0" data-cnt-h="67.8"
+              data-qa-avg="58.9"  data-qa-e="66.4"  data-qa-h="52.2"
+              data-hall-avg="65.0" data-hall-e="68.2" data-hall-h="62.0">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">o4-mini <span class="thinking-badge">Thinking</span></div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="63.4">63.4</td>
+            <td class="score-cell group-start" data-value="66.5">66.5</td>
+            <td class="score-cell group-start" data-value="58.9">58.9</td>
+            <td class="score-cell group-start" data-value="65.0">65.0</td>
           </tr>
 
-          <!-- Rank 7 — Llama 3.1 70B -->
-          <tr data-open="true">
-            <td class="rank-cell" data-value="7">
-              <span class="rank-medal rank-medal--n">7</span>
-            </td>
-            <td class="score-cell score-cell--overall" data-value="58.7">58.7</td>
-            <td class="model-cell">
-              <div class="model-name-wrap">Llama 3.1 70B</div>
-            </td>
-            <td class="score-cell" data-value="63.5">63.5</td>
-            <td class="score-cell" data-value="68.9">68.9</td>
-            <td class="score-cell" data-value="55.4">55.4</td>
-            <td class="score-cell" data-value="51.2">51.2</td>
-            <td>
-              <span class="open-badge open-badge--yes">
-                ✓ Yes
-              </span>
-            </td>
+          <tr data-type="closed-llm"
+              data-ovr-avg="66.4" data-ovr-e="69.8" data-ovr-h="63.3"
+              data-cnt-avg="77.6" data-cnt-e="79.3" data-cnt-h="76.2"
+              data-qa-avg="57.7"  data-qa-e="62.5"  data-qa-h="53.3"
+              data-hall-avg="63.9" data-hall-e="67.6" data-hall-h="60.5">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen-Turbo <span class="thinking-badge">Thinking</span></div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="66.4">66.4</td>
+            <td class="score-cell group-start" data-value="77.6">77.6</td>
+            <td class="score-cell group-start" data-value="57.7">57.7</td>
+            <td class="score-cell group-start" data-value="63.9">63.9</td>
           </tr>
 
-          <!-- Rank 8 — Mistral Large -->
-          <tr data-open="false">
-            <td class="rank-cell" data-value="8">
-              <span class="rank-medal rank-medal--n">8</span>
-            </td>
-            <td class="score-cell score-cell--overall" data-value="57.3">57.3</td>
-            <td class="model-cell">
-              <div class="model-name-wrap">Mistral Large</div>
-            </td>
-            <td class="score-cell" data-value="62.1">62.1</td>
-            <td class="score-cell" data-value="67.3">67.3</td>
-            <td class="score-cell" data-value="54.8">54.8</td>
-            <td class="score-cell" data-value="49.7">49.7</td>
-            <td>
-              <span class="open-badge open-badge--no">
-                🔒 No
-              </span>
-            </td>
+          <tr data-type="closed-llm"
+              data-ovr-avg="59.7" data-ovr-e="61.3" data-ovr-h="58.2"
+              data-cnt-avg="48.1" data-cnt-e="45.6" data-cnt-h="50.2"
+              data-qa-avg="67.3"  data-qa-e="70.8"  data-qa-h="64.2"
+              data-hall-avg="63.7" data-hall-e="67.4" data-hall-h="60.2">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen-Plus <span class="thinking-badge">Thinking</span></div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="59.7">59.7</td>
+            <td class="score-cell group-start" data-value="48.1">48.1</td>
+            <td class="score-cell group-start" data-value="67.3">67.3</td>
+            <td class="score-cell group-start" data-value="63.7">63.7</td>
           </tr>
 
-          <!-- Rank 9 — Gemma 2 27B -->
-          <tr data-open="true">
-            <td class="rank-cell" data-value="9">
-              <span class="rank-medal rank-medal--n">9</span>
-            </td>
+          <tr data-type="closed-llm"
+              data-ovr-avg="56.8" data-ovr-e="60.0" data-ovr-h="54.1"
+              data-cnt-avg="61.4" data-cnt-e="59.7" data-cnt-h="62.8"
+              data-qa-avg="49.1"  data-qa-e="55.9"  data-qa-h="43.5"
+              data-hall-avg="60.0" data-hall-e="64.4" data-hall-h="56.0">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Gemini 3.1 Flash Lite Preview</div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="56.8">56.8</td>
+            <td class="score-cell group-start" data-value="61.4">61.4</td>
+            <td class="score-cell group-start" data-value="49.1">49.1</td>
+            <td class="score-cell group-start" data-value="60.0">60.0</td>
+          </tr>
+
+          <tr data-type="closed-llm"
+              data-ovr-avg="54.0" data-ovr-e="58.1" data-ovr-h="50.3"
+              data-cnt-avg="38.9" data-cnt-e="41.8" data-cnt-h="36.3"
+              data-qa-avg="57.5"  data-qa-e="64.1"  data-qa-h="51.7"
+              data-hall-avg="65.5" data-hall-e="68.3" data-hall-h="63.0">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">GPT-5.4</div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="54.0">54.0</td>
+            <td class="score-cell group-start" data-value="38.9">38.9</td>
+            <td class="score-cell group-start" data-value="57.5">57.5</td>
+            <td class="score-cell group-start" data-value="65.5">65.5</td>
+          </tr>
+
+          <tr data-type="closed-llm"
+              data-ovr-avg="59.4" data-ovr-e="62.9" data-ovr-h="56.2"
+              data-cnt-avg="60.7" data-cnt-e="60.8" data-cnt-h="60.7"
+              data-qa-avg="52.2"  data-qa-e="59.3"  data-qa-h="46.0"
+              data-hall-avg="65.1" data-hall-e="68.7" data-hall-h="61.8">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen3.5-Plus</div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="59.4">59.4</td>
+            <td class="score-cell group-start" data-value="60.7">60.7</td>
+            <td class="score-cell group-start" data-value="52.2">52.2</td>
+            <td class="score-cell group-start" data-value="65.1">65.1</td>
+          </tr>
+
+          <tr data-type="closed-llm"
+              data-ovr-avg="32.4" data-ovr-e="36.0" data-ovr-h="29.2"
+              data-cnt-avg="47.3" data-cnt-e="48.2" data-cnt-h="46.5"
+              data-qa-avg="46.5"  data-qa-e="54.5"  data-qa-h="39.5"
+              data-hall-avg="3.4"  data-hall-e="5.4"  data-hall-h="1.5">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen3.5-Flash</div></td>
+            <td><span class="type-badge type-badge--closed-llm">Closed LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="32.4">32.4</td>
+            <td class="score-cell group-start" data-value="47.3">47.3</td>
+            <td class="score-cell group-start" data-value="46.5">46.5</td>
+            <td class="score-cell group-start" data-value="3.4">3.4</td>
+          </tr>
+
+          <!-- ==========================================================
+               OPEN-SOURCE LLMs
+               ========================================================== -->
+
+          <tr data-type="open-llm"
+              data-ovr-avg="54.4" data-ovr-e="58.5" data-ovr-h="50.6"
+              data-cnt-avg="51.5" data-cnt-e="52.1" data-cnt-h="51.0"
+              data-qa-avg="50.5"  data-qa-e="58.0"  data-qa-h="43.9"
+              data-hall-avg="61.0" data-hall-e="65.4" data-hall-h="57.0">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">DeepSeek-V3</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="54.4">54.4</td>
+            <td class="score-cell group-start" data-value="51.5">51.5</td>
+            <td class="score-cell group-start" data-value="50.5">50.5</td>
+            <td class="score-cell group-start" data-value="61.0">61.0</td>
+          </tr>
+
+          <tr data-type="open-llm"
+              data-ovr-avg="49.8" data-ovr-e="53.8" data-ovr-h="46.2"
+              data-cnt-avg="44.1" data-cnt-e="46.4" data-cnt-h="42.0"
+              data-qa-avg="57.7"  data-qa-e="62.1"  data-qa-h="53.8"
+              data-hall-avg="47.7" data-hall-e="52.9" data-hall-h="42.8">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Kimi K2</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="49.8">49.8</td>
+            <td class="score-cell group-start" data-value="44.1">44.1</td>
+            <td class="score-cell group-start" data-value="57.7">57.7</td>
+            <td class="score-cell group-start" data-value="47.7">47.7</td>
+          </tr>
+
+          <tr data-type="open-llm"
+              data-ovr-avg="30.3" data-ovr-e="33.6" data-ovr-h="27.3"
+              data-cnt-avg="32.6" data-cnt-e="32.3" data-cnt-h="32.8"
+              data-qa-avg="22.2"  data-qa-e="25.6"  data-qa-h="18.9"
+              data-hall-avg="36.2" data-hall-e="42.8" data-hall-h="30.2">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen2.5-7B</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="30.3">30.3</td>
+            <td class="score-cell group-start" data-value="32.6">32.6</td>
+            <td class="score-cell group-start" data-value="22.2">22.2</td>
+            <td class="score-cell group-start" data-value="36.2">36.2</td>
+          </tr>
+
+          <tr data-type="open-llm"
+              data-ovr-avg="48.3" data-ovr-e="52.3" data-ovr-h="44.8"
+              data-cnt-avg="43.7" data-cnt-e="45.7" data-cnt-h="41.9"
+              data-qa-avg="36.3"  data-qa-e="42.9"  data-qa-h="30.6"
+              data-hall-avg="65.0" data-hall-e="68.2" data-hall-h="62.0">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen2.5-Coder-32B</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
             <td class="score-cell score-cell--overall" data-value="48.3">48.3</td>
-            <td class="model-cell">
-              <div class="model-name-wrap">Gemma 2 27B</div>
-            </td>
-            <td class="score-cell" data-value="52.7">52.7</td>
-            <td class="score-cell" data-value="56.4">56.4</td>
-            <td class="score-cell" data-value="46.2">46.2</td>
-            <td class="score-cell" data-value="41.8">41.8</td>
-            <td>
-              <span class="open-badge open-badge--yes">
-                ✓ Yes
-              </span>
-            </td>
+            <td class="score-cell group-start" data-value="43.7">43.7</td>
+            <td class="score-cell group-start" data-value="36.3">36.3</td>
+            <td class="score-cell group-start" data-value="65.0">65.0</td>
           </tr>
 
-          <!-- Rank 10 — GPT-3.5 Turbo -->
-          <tr data-open="false">
-            <td class="rank-cell" data-value="10">
-              <span class="rank-medal rank-medal--n">10</span>
-            </td>
-            <td class="score-cell score-cell--overall" data-value="52.6">52.6</td>
-            <td class="model-cell">
-              <div class="model-name-wrap">GPT-3.5 Turbo</div>
-            </td>
-            <td class="score-cell" data-value="57.4">57.4</td>
-            <td class="score-cell" data-value="61.8">61.8</td>
-            <td class="score-cell" data-value="50.2">50.2</td>
-            <td class="score-cell" data-value="45.3">45.3</td>
-            <td>
-              <span class="open-badge open-badge--no">
-                🔒 No
-              </span>
-            </td>
+          <tr data-type="open-llm"
+              data-ovr-avg="52.0" data-ovr-e="55.5" data-ovr-h="49.0"
+              data-cnt-avg="53.5" data-cnt-e="53.1" data-cnt-h="53.8"
+              data-qa-avg="47.5"  data-qa-e="54.5"  data-qa-h="41.4"
+              data-hall-avg="55.1" data-hall-e="58.7" data-hall-h="51.7">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen2.5-72B</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="52.0">52.0</td>
+            <td class="score-cell group-start" data-value="53.5">53.5</td>
+            <td class="score-cell group-start" data-value="47.5">47.5</td>
+            <td class="score-cell group-start" data-value="55.1">55.1</td>
           </tr>
 
-          <!-- Rank 11 — Llama 3.1 8B -->
-          <tr data-open="true">
-            <td class="rank-cell" data-value="11">
-              <span class="rank-medal rank-medal--n">11</span>
-            </td>
-            <td class="score-cell score-cell--overall" data-value="45.8">45.8</td>
-            <td class="model-cell">
-              <div class="model-name-wrap">Llama 3.1 8B</div>
-            </td>
-            <td class="score-cell" data-value="50.2">50.2</td>
-            <td class="score-cell" data-value="53.6">53.6</td>
-            <td class="score-cell" data-value="43.1">43.1</td>
-            <td class="score-cell" data-value="38.7">38.7</td>
-            <td>
-              <span class="open-badge open-badge--yes">
-                ✓ Yes
-              </span>
-            </td>
+          <tr data-type="open-llm"
+              data-ovr-avg="48.8" data-ovr-e="52.5" data-ovr-h="45.4"
+              data-cnt-avg="51.5" data-cnt-e="53.3" data-cnt-h="49.9"
+              data-qa-avg="48.4"  data-qa-e="54.9"  data-qa-h="42.8"
+              data-hall-avg="46.3" data-hall-e="49.4" data-hall-h="43.5">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen3-235B-A22B</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="48.8">48.8</td>
+            <td class="score-cell group-start" data-value="51.5">51.5</td>
+            <td class="score-cell group-start" data-value="48.4">48.4</td>
+            <td class="score-cell group-start" data-value="46.3">46.3</td>
           </tr>
 
-          <!-- Rank 12 — Mistral 7B -->
-          <tr data-open="true">
-            <td class="rank-cell" data-value="12">
-              <span class="rank-medal rank-medal--n">12</span>
-            </td>
-            <td class="score-cell score-cell--overall" data-value="39.2">39.2</td>
+          <tr data-type="open-llm"
+              data-ovr-avg="16.4" data-ovr-e="18.8" data-ovr-h="14.2"
+              data-cnt-avg="9.0"  data-cnt-e="8.9"  data-cnt-h="9.1"
+              data-qa-avg="26.8"  data-qa-e="32.2"  data-qa-h="21.9"
+              data-hall-avg="13.4" data-hall-e="15.2" data-hall-h="11.8">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Llama 3.1-8B</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="16.4">16.4</td>
+            <td class="score-cell group-start" data-value="9.0">9.0</td>
+            <td class="score-cell group-start" data-value="26.8">26.8</td>
+            <td class="score-cell group-start" data-value="13.4">13.4</td>
+          </tr>
+
+          <tr data-type="open-llm"
+              data-ovr-avg="50.7" data-ovr-e="54.7" data-ovr-h="47.2"
+              data-cnt-avg="39.0" data-cnt-e="41.9" data-cnt-h="36.5"
+              data-qa-avg="48.2"  data-qa-e="53.9"  data-qa-h="43.1"
+              data-hall-avg="65.0" data-hall-e="68.2" data-hall-h="62.0">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Llama 3.3-70B</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="50.7">50.7</td>
+            <td class="score-cell group-start" data-value="39.0">39.0</td>
+            <td class="score-cell group-start" data-value="48.2">48.2</td>
+            <td class="score-cell group-start" data-value="65.0">65.0</td>
+          </tr>
+
+          <tr data-type="open-llm"
+              data-ovr-avg="49.0" data-ovr-e="50.5" data-ovr-h="47.5"
+              data-cnt-avg="44.6" data-cnt-e="38.1" data-cnt-h="50.3"
+              data-qa-avg="59.5"  data-qa-e="65.0"  data-qa-h="54.5"
+              data-hall-avg="42.9" data-hall-e="48.5" data-hall-h="37.7">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Llama 4 Maverick</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="49.0">49.0</td>
+            <td class="score-cell group-start" data-value="44.6">44.6</td>
+            <td class="score-cell group-start" data-value="59.5">59.5</td>
+            <td class="score-cell group-start" data-value="42.9">42.9</td>
+          </tr>
+
+          <tr data-type="open-llm"
+              data-ovr-avg="69.3" data-ovr-e="72.3" data-ovr-h="66.6"
+              data-cnt-avg="84.6" data-cnt-e="83.8" data-cnt-h="85.3"
+              data-qa-avg="58.2"  data-qa-e="64.8"  data-qa-h="52.4"
+              data-hall-avg="65.0" data-hall-e="68.3" data-hall-h="62.0">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">DeepSeek-R1 <span class="thinking-badge">Thinking</span></div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="69.3">69.3</td>
+            <td class="score-cell group-start" data-value="84.6">84.6</td>
+            <td class="score-cell group-start" data-value="58.2">58.2</td>
+            <td class="score-cell group-start" data-value="65.0">65.0</td>
+          </tr>
+
+          <tr data-type="open-llm"
+              data-ovr-avg="61.8" data-ovr-e="65.3" data-ovr-h="58.6"
+              data-cnt-avg="65.4" data-cnt-e="66.1" data-cnt-h="64.7"
+              data-qa-avg="68.4"  data-qa-e="74.0"  data-qa-h="63.4"
+              data-hall-avg="51.6" data-hall-e="55.9" data-hall-h="47.6">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Kimi-K2.5</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="61.8">61.8</td>
+            <td class="score-cell group-start" data-value="65.4">65.4</td>
+            <td class="score-cell group-start" data-value="68.4">68.4</td>
+            <td class="score-cell group-start" data-value="51.6">51.6</td>
+          </tr>
+
+          <tr data-type="open-llm"
+              data-ovr-avg="52.3" data-ovr-e="56.0" data-ovr-h="48.9"
+              data-cnt-avg="46.4" data-cnt-e="45.6" data-cnt-h="47.1"
+              data-qa-avg="50.9"  data-qa-e="57.7"  data-qa-h="44.9"
+              data-hall-avg="59.5" data-hall-e="64.5" data-hall-h="54.8">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen3.5-27B</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="52.3">52.3</td>
+            <td class="score-cell group-start" data-value="46.4">46.4</td>
+            <td class="score-cell group-start" data-value="50.9">50.9</td>
+            <td class="score-cell group-start" data-value="59.5">59.5</td>
+          </tr>
+
+          <tr data-type="open-llm"
+              data-ovr-avg="32.8" data-ovr-e="34.0" data-ovr-h="31.8"
+              data-cnt-avg="34.5" data-cnt-e="29.8" data-cnt-h="38.6"
+              data-qa-avg="33.8"  data-qa-e="37.8"  data-qa-h="30.3"
+              data-hall-avg="30.1" data-hall-e="34.2" data-hall-h="26.3">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen3-8B</div></td>
+            <td><span class="type-badge type-badge--open-llm">Open LLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="32.8">32.8</td>
+            <td class="score-cell group-start" data-value="34.5">34.5</td>
+            <td class="score-cell group-start" data-value="33.8">33.8</td>
+            <td class="score-cell group-start" data-value="30.1">30.1</td>
+          </tr>
+
+          <!-- ==========================================================
+               CLOSED-SOURCE MLLMs
+               ========================================================== -->
+
+          <tr data-type="closed-mllm"
+              data-ovr-avg="46.9" data-ovr-e="51.3" data-ovr-h="43.0"
+              data-cnt-avg="41.5" data-cnt-e="45.3" data-cnt-h="38.1"
+              data-qa-avg="48.8"  data-qa-e="55.6"  data-qa-h="42.9"
+              data-hall-avg="50.5" data-hall-e="53.1" data-hall-h="48.1">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen3.5-Plus</div></td>
+            <td><span class="type-badge type-badge--closed-mllm">Closed MLLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="46.9">46.9</td>
+            <td class="score-cell group-start" data-value="41.5">41.5</td>
+            <td class="score-cell group-start" data-value="48.8">48.8</td>
+            <td class="score-cell group-start" data-value="50.5">50.5</td>
+          </tr>
+
+          <tr data-type="closed-mllm"
+              data-ovr-avg="37.9" data-ovr-e="41.5" data-ovr-h="34.6"
+              data-cnt-avg="31.6" data-cnt-e="33.1" data-cnt-h="30.3"
+              data-qa-avg="44.0"  data-qa-e="50.8"  data-qa-h="37.9"
+              data-hall-avg="38.0" data-hall-e="40.5" data-hall-h="35.7">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen3.5-Flash</div></td>
+            <td><span class="type-badge type-badge--closed-mllm">Closed MLLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="37.9">37.9</td>
+            <td class="score-cell group-start" data-value="31.6">31.6</td>
+            <td class="score-cell group-start" data-value="44.0">44.0</td>
+            <td class="score-cell group-start" data-value="38.0">38.0</td>
+          </tr>
+
+          <tr data-type="closed-mllm"
+              data-ovr-avg="44.9" data-ovr-e="49.2" data-ovr-h="41.1"
+              data-cnt-avg="32.6" data-cnt-e="33.3" data-cnt-h="32.1"
+              data-qa-avg="47.9"  data-qa-e="56.3"  data-qa-h="40.4"
+              data-hall-avg="54.2" data-hall-e="57.9" data-hall-h="50.9">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Gemini 3.1 Flash Lite Preview</div></td>
+            <td><span class="type-badge type-badge--closed-mllm">Closed MLLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="44.9">44.9</td>
+            <td class="score-cell group-start" data-value="32.6">32.6</td>
+            <td class="score-cell group-start" data-value="47.9">47.9</td>
+            <td class="score-cell group-start" data-value="54.2">54.2</td>
+          </tr>
+
+          <tr data-type="closed-mllm"
+              data-ovr-avg="45.2" data-ovr-e="48.3" data-ovr-h="42.5"
+              data-cnt-avg="30.9" data-cnt-e="30.9" data-cnt-h="31.0"
+              data-qa-avg="53.4"  data-qa-e="60.0"  data-qa-h="47.6"
+              data-hall-avg="51.4" data-hall-e="54.1" data-hall-h="48.9">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">GPT-5.4</div></td>
+            <td><span class="type-badge type-badge--closed-mllm">Closed MLLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="45.2">45.2</td>
+            <td class="score-cell group-start" data-value="30.9">30.9</td>
+            <td class="score-cell group-start" data-value="53.4">53.4</td>
+            <td class="score-cell group-start" data-value="51.4">51.4</td>
+          </tr>
+
+          <!-- ==========================================================
+               OPEN-SOURCE MLLMs
+               ========================================================== -->
+
+          <tr data-type="open-mllm"
+              data-ovr-avg="52.9" data-ovr-e="55.6" data-ovr-h="50.5"
+              data-cnt-avg="56.1" data-cnt-e="54.1" data-cnt-h="57.8"
+              data-qa-avg="64.7"  data-qa-e="70.1"  data-qa-h="59.9"
+              data-hall-avg="37.9" data-hall-e="42.5" data-hall-h="33.7">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Kimi-K2.5</div></td>
+            <td><span class="type-badge type-badge--open-mllm">Open MLLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="52.9">52.9</td>
+            <td class="score-cell group-start" data-value="56.1">56.1</td>
+            <td class="score-cell group-start" data-value="64.7">64.7</td>
+            <td class="score-cell group-start" data-value="37.9">37.9</td>
+          </tr>
+
+          <tr data-type="open-mllm"
+              data-ovr-avg="43.5" data-ovr-e="46.4" data-ovr-h="40.7"
+              data-cnt-avg="45.9" data-cnt-e="48.3" data-cnt-h="43.9"
+              data-qa-avg="52.9"  data-qa-e="58.9"  data-qa-h="46.8"
+              data-hall-avg="31.8" data-hall-e="32.1" data-hall-h="31.4">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen3.5-27B</div></td>
+            <td><span class="type-badge type-badge--open-mllm">Open MLLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="43.5">43.5</td>
+            <td class="score-cell group-start" data-value="45.9">45.9</td>
+            <td class="score-cell group-start" data-value="52.9">52.9</td>
+            <td class="score-cell group-start" data-value="31.8">31.8</td>
+          </tr>
+
+          <tr data-type="open-mllm"
+              data-ovr-avg="37.5" data-ovr-e="41.4" data-ovr-h="34.0"
+              data-cnt-avg="33.5" data-cnt-e="38.9" data-cnt-h="28.8"
+              data-qa-avg="50.2"  data-qa-e="55.4"  data-qa-h="45.5"
+              data-hall-avg="28.7" data-hall-e="29.9" data-hall-h="27.7">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen3.5-397B-A17B</div></td>
+            <td><span class="type-badge type-badge--open-mllm">Open MLLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="37.5">37.5</td>
+            <td class="score-cell group-start" data-value="33.5">33.5</td>
+            <td class="score-cell group-start" data-value="50.2">50.2</td>
+            <td class="score-cell group-start" data-value="28.7">28.7</td>
+          </tr>
+
+          <tr data-type="open-mllm"
+              data-ovr-avg="30.5" data-ovr-e="34.2" data-ovr-h="27.2"
+              data-cnt-avg="33.1" data-cnt-e="34.0" data-cnt-h="32.4"
+              data-qa-avg="43.5"  data-qa-e="51.4"  data-qa-h="36.5"
+              data-hall-avg="14.8" data-hall-e="17.2" data-hall-h="12.6">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen3.5-35B-A3B</div></td>
+            <td><span class="type-badge type-badge--open-mllm">Open MLLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="30.5">30.5</td>
+            <td class="score-cell group-start" data-value="33.1">33.1</td>
+            <td class="score-cell group-start" data-value="43.5">43.5</td>
+            <td class="score-cell group-start" data-value="14.8">14.8</td>
+          </tr>
+
+          <tr data-type="open-mllm"
+              data-ovr-avg="27.3" data-ovr-e="28.3" data-ovr-h="26.4"
+              data-cnt-avg="13.0" data-cnt-e="11.6" data-cnt-h="14.3"
+              data-qa-avg="38.0"  data-qa-e="43.3"  data-qa-h="33.4"
+              data-hall-avg="30.8" data-hall-e="30.0" data-hall-h="31.6">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">Qwen3-VL-8B-Instruct</div></td>
+            <td><span class="type-badge type-badge--open-mllm">Open MLLM</span></td>
+            <td class="score-cell score-cell--overall" data-value="27.3">27.3</td>
+            <td class="score-cell group-start" data-value="13.0">13.0</td>
+            <td class="score-cell group-start" data-value="38.0">38.0</td>
+            <td class="score-cell group-start" data-value="30.8">30.8</td>
+          </tr>
+
+          <!-- ==========================================================
+               FINE-TUNED LLMs
+               ========================================================== -->
+
+          <tr data-type="finetuned"
+              data-ovr-avg="10.9" data-ovr-e="12.1" data-ovr-h="10.0"
+              data-cnt-avg="8.4"  data-cnt-e="7.8"  data-cnt-h="8.9"
+              data-qa-avg="24.3"  data-qa-e="28.4"  data-qa-h="20.9"
+              data-hall-avg="0.1"  data-hall-e="0.2"  data-hall-h="0.1">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">TableLLM-Qwen2-7B</div></td>
+            <td><span class="type-badge type-badge--finetuned">Fine-tuned</span></td>
+            <td class="score-cell score-cell--overall" data-value="10.9">10.9</td>
+            <td class="score-cell group-start" data-value="8.4">8.4</td>
+            <td class="score-cell group-start" data-value="24.3">24.3</td>
+            <td class="score-cell group-start" data-value="0.1">0.1</td>
+          </tr>
+
+          <tr data-type="finetuned"
+              data-ovr-avg="31.7" data-ovr-e="35.4" data-ovr-h="28.4"
+              data-cnt-avg="41.4" data-cnt-e="41.9" data-cnt-h="41.0"
+              data-qa-avg="29.2"  data-qa-e="35.1"  data-qa-h="23.9"
+              data-hall-avg="24.6" data-hall-e="29.1" data-hall-h="20.4">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell"><div class="model-name-wrap">TableGPT2-7B</div></td>
+            <td><span class="type-badge type-badge--finetuned">Fine-tuned</span></td>
+            <td class="score-cell score-cell--overall" data-value="31.7">31.7</td>
+            <td class="score-cell group-start" data-value="41.4">41.4</td>
+            <td class="score-cell group-start" data-value="29.2">29.2</td>
+            <td class="score-cell group-start" data-value="24.6">24.6</td>
+          </tr>
+
+          <tr data-type="finetuned" class="row--ours"
+              data-ovr-avg="57.3" data-ovr-e="59.2" data-ovr-h="55.5"
+              data-cnt-avg="57.1" data-cnt-e="57.8" data-cnt-h="56.5"
+              data-qa-avg="36.1"  data-qa-e="37.5"  data-qa-h="34.8"
+              data-hall-avg="78.6" data-hall-e="82.4" data-hall-h="75.1">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
             <td class="model-cell">
-              <div class="model-name-wrap">Mistral 7B</div>
+              <div class="model-name-wrap">CoTabLLM-7B (Qwen2.5) <span class="ours-badge">Ours</span></div>
             </td>
-            <td class="score-cell" data-value="43.8">43.8</td>
-            <td class="score-cell" data-value="47.1">47.1</td>
-            <td class="score-cell" data-value="37.4">37.4</td>
-            <td class="score-cell" data-value="32.6">32.6</td>
-            <td>
-              <span class="open-badge open-badge--yes">
-                ✓ Yes
-              </span>
+            <td><span class="type-badge type-badge--finetuned">Fine-tuned</span></td>
+            <td class="score-cell score-cell--overall" data-value="57.3">57.3</td>
+            <td class="score-cell group-start" data-value="57.1">57.1</td>
+            <td class="score-cell group-start" data-value="36.1">36.1</td>
+            <td class="score-cell group-start" data-value="78.6">78.6</td>
+          </tr>
+
+          <tr data-type="finetuned" class="row--ours"
+              data-ovr-avg="51.5" data-ovr-e="53.5" data-ovr-h="49.7"
+              data-cnt-avg="57.3" data-cnt-e="57.0" data-cnt-h="57.6"
+              data-qa-avg="32.2"  data-qa-e="35.1"  data-qa-h="29.6"
+              data-hall-avg="65.0" data-hall-e="68.3" data-hall-h="62.0">
+            <td class="rank-cell"><span class="rank-medal rank-medal--n">-</span></td>
+            <td class="model-cell">
+              <div class="model-name-wrap">CoTabLLM-8B (LLaMA3) <span class="ours-badge">Ours</span></div>
             </td>
+            <td><span class="type-badge type-badge--finetuned">Fine-tuned</span></td>
+            <td class="score-cell score-cell--overall" data-value="51.5">51.5</td>
+            <td class="score-cell group-start" data-value="57.3">57.3</td>
+            <td class="score-cell group-start" data-value="32.2">32.2</td>
+            <td class="score-cell group-start" data-value="65.0">65.0</td>
           </tr>
 
         </tbody>
@@ -312,22 +640,22 @@ description: "CoTabBench model leaderboard — ranked results for all evaluated 
     </div>
 
     <!-- Legend -->
-    <div class="lb-legend">
+    <div class="lb-legend" style="margin-top:14px;">
       <div class="legend-item">
-        <span class="rank-medal rank-medal--1" style="width:22px;height:22px;font-size:.72rem;">1</span>
-        Gold
+        <span class="rank-medal rank-medal--1" style="width:22px;height:22px;font-size:.72rem;">1</span> Gold
       </div>
       <div class="legend-item">
-        <span class="rank-medal rank-medal--2" style="width:22px;height:22px;font-size:.72rem;">2</span>
-        Silver
+        <span class="rank-medal rank-medal--2" style="width:22px;height:22px;font-size:.72rem;">2</span> Silver
       </div>
       <div class="legend-item">
-        <span class="rank-medal rank-medal--3" style="width:22px;height:22px;font-size:.72rem;">3</span>
-        Bronze
+        <span class="rank-medal rank-medal--3" style="width:22px;height:22px;font-size:.72rem;">3</span> Bronze
       </div>
       <div class="legend-item" style="margin-left:8px;">
         <span style="display:inline-block;width:16px;height:16px;background:linear-gradient(90deg,#f5f3ff,#eff6ff);border:1px solid #c4b5fd;border-radius:3px;"></span>
         Our model (CoTabLLM)
+      </div>
+      <div class="legend-item">
+        <span class="thinking-badge">Thinking</span> Thinking/Reasoning mode
       </div>
     </div>
 
@@ -335,47 +663,39 @@ description: "CoTabBench model leaderboard — ranked results for all evaluated 
     <div class="lb-notes">
       <h4>Evaluation Notes</h4>
       <ul>
-        <li>All models evaluated in zero-shot setting (no few-shot examples, no chain-of-thought prompting) using the standardized CoTabBench prompt templates.</li>
-        <li>Overall score is the macro-average across all five task categories, weighted equally.</li>
-        <li>Scores for closed-source models reflect performance at a fixed API snapshot; scores may vary across model versions.</li>
-        <li>CoTabLLM is fine-tuned on CoTabInstruct (which is derived from training splits only); no test data leakage.</li>
-        <li>We welcome community submissions — see the GitHub repository for evaluation instructions and submission guidelines.</li>
+        <li><strong>Counting</strong>: Row &amp; column counting — tests structural comprehension of merged cells.</li>
+        <li><strong>Table QA</strong>: Question answering — joint semantic and structural reasoning over tables.</li>
+        <li><strong>Hall. Detect</strong>: Hallucination detection — Data Absence &amp; Attribution Error adversarial questions.</li>
+        <li><strong>Overall</strong> is the macro-average of the three task scores. Use the <em>Difficulty</em> toggle above to view Easy or Hard subset scores independently.</li>
+        <li>MLLMs (Multimodal LLMs) received table screenshots as image input; all other models received serialized text input.</li>
+        <li>CoTabLLM is fine-tuned on CoTabInstruct (training splits only); no test data leakage.</li>
       </ul>
     </div>
 
-    <!-- Score distribution context -->
+    <!-- Highlights -->
     <div style="margin-top:48px;">
-      <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:20px;color:var(--color-text);">Score Distribution by Task Type</h3>
+      <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:20px;color:var(--color-text);">Score Highlights</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
-
         <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:20px;">
-          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#2563eb;margin-bottom:10px;">❓ Table QA</div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Best: <strong style="color:var(--color-text);">GPT-4o (78.5)</strong></div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Avg: <strong style="color:var(--color-text);">62.4</strong></div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);">Gap (best vs. worst): <strong style="color:var(--color-text);">34.7</strong></div>
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#2563eb;margin-bottom:10px;">🔢 Counting (avg)</div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:4px;">Best: <strong style="color:var(--color-text);">DeepSeek-R1 (84.6)</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);">Worst: <strong style="color:var(--color-text);">TableLLM (8.4)</strong></div>
         </div>
-
         <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:20px;">
-          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#7c3aed;margin-bottom:10px;">🔍 Cell Lookup</div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Best: <strong style="color:var(--color-text);">GPT-4o (85.2)</strong></div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Avg: <strong style="color:var(--color-text);">69.3</strong></div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);">Gap (best vs. worst): <strong style="color:var(--color-text);">38.1</strong></div>
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#7c3aed;margin-bottom:10px;">❓ Table QA (avg)</div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:4px;">Best: <strong style="color:var(--color-text);">Kimi-K2.5 LLM (68.4)</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);">Worst: <strong style="color:var(--color-text);">TableLLM (24.3)</strong></div>
         </div>
-
         <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:20px;">
-          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#059669;margin-bottom:10px;">📝 Summarization</div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Best: <strong style="color:var(--color-text);">GPT-4o (68.4)</strong></div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Avg: <strong style="color:var(--color-text);">56.1</strong></div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);">Gap (best vs. worst): <strong style="color:var(--color-text);">31.0</strong></div>
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#059669;margin-bottom:10px;">🛡️ Hall. Detect (avg)</div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:4px;">Best: <strong style="color:var(--color-text);">CoTabLLM-7B (78.6)</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);">Worst: <strong style="color:var(--color-text);">TableLLM (0.1)</strong></div>
         </div>
-
         <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:20px;">
-          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#d97706;margin-bottom:10px;">💬 Multi-turn</div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Best: <strong style="color:var(--color-text);">GPT-4o (65.1)</strong></div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:6px;">Avg: <strong style="color:var(--color-text);">51.9</strong></div>
-          <div style="font-size:.85rem;color:var(--color-text-muted);">Gap (best vs. worst): <strong style="color:var(--color-text);">32.5</strong></div>
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#d97706;margin-bottom:10px;">🏆 Overall (avg)</div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);margin-bottom:4px;">Best: <strong style="color:var(--color-text);">DeepSeek-R1 (69.3)</strong></div>
+          <div style="font-size:.85rem;color:var(--color-text-muted);">Worst: <strong style="color:var(--color-text);">TableLLM (10.9)</strong></div>
         </div>
-
       </div>
     </div>
 

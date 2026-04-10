@@ -1077,11 +1077,17 @@ p:last-child { margin-bottom: 0; }
 /* Filters */
 .lb-controls {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.lb-controls-row {
+  display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 28px;
+  gap: 12px;
 }
 
 .lb-filters {
@@ -1107,6 +1113,35 @@ p:last-child { margin-bottom: 0; }
   background: var(--color-primary);
   color: #fff;
   border-color: var(--color-primary);
+}
+
+/* Difficulty toggle — smaller, distinct colour */
+.diff-btn {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.diff-btn:hover,
+.diff-btn.active {
+  background: #7c3aed;
+  color: #fff;
+  border-color: #7c3aed;
+}
+
+.lb-controls-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
 }
 
 .lb-meta {
@@ -1307,6 +1342,105 @@ p:last-child { margin-bottom: 0; }
   color: #1e40af;
   margin-bottom: 4px;
 }
+
+/* Leaderboard: group column header (legacy, kept for compat) */
+.col-group-header {
+  text-align: center !important;
+  cursor: default !important;
+  background: #e2e8f2 !important;
+  border-left: 2px solid #cbd5e1 !important;
+  color: var(--color-text) !important;
+  letter-spacing: 0.04em;
+}
+.col-group-header:hover { background: #e2e8f2 !important; }
+
+/* Leaderboard: Overall column header */
+.lb-table th.th-overall {
+  background: #eef2ff;
+  color: var(--color-primary);
+  font-weight: 800;
+  border-left: 2px solid #c7d2fe;
+  text-align: center;
+}
+.lb-table th.th-overall:hover { background: #e0e7ff; }
+
+/* Leaderboard: task group dividers — Counting/QA/Hall are th/td nth-child 5,6,7 */
+.lb-table th.group-start,
+.lb-table tbody td.group-start {
+  border-left: 2px solid #cbd5e1;
+}
+
+/* Overall column highlight (4th th/td) */
+.lb-table th.th-overall {
+  background: #eef2ff !important;
+  color: var(--color-primary) !important;
+  font-weight: 800;
+  text-align: center;
+}
+.lb-table th.th-overall:hover { background: #e0e7ff !important; }
+
+/* Leaderboard: avg sub-column header */
+.lb-table th.th-avg {
+  background: #f0f4ff;
+  color: var(--color-primary-dark);
+}
+.lb-table th.th-avg:hover { background: #e0e7ff; }
+
+/* Leaderboard: sub-header row (easy / hard / avg) */
+.lb-table thead tr.lb-subhead th {
+  background: #f8fafc;
+  font-size: 0.7rem;
+  padding: 7px 10px;
+  text-align: center;
+  border-left: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+.lb-table thead tr.lb-subhead th.subhead-avg {
+  background: #eef2fb;
+  color: var(--color-primary);
+}
+
+/* Leaderboard: type badges */
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.66rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+.type-badge--closed-llm { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+.type-badge--open-llm   { background: #d1fae5; color: #065f46; }
+.type-badge--closed-mllm { background: #ede9fe; color: #5b21b6; }
+.type-badge--open-mllm   { background: #dbeafe; color: #1e40af; }
+.type-badge--finetuned  { background: #fef3c7; color: #92400e; }
+
+/* Leaderboard: thinking badge */
+.thinking-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* Leaderboard: avg score column */
+.score-cell--avg {
+  background: #f0f4ff;
+  font-weight: 700;
+  text-align: center;
+}
+.score-cell--overall-avg {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  background: #eef2ff;
+  text-align: center;
+}
+.score-cell { text-align: center; }
 
 /* --- Responsive -------------------------------------------- */
 @media (max-width: 900px) {
