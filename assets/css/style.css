@@ -249,9 +249,32 @@ p:last-child { margin-bottom: 0; }
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   font-size: clamp(3rem, 7vw, 5rem);
   font-weight: 900;
+}
+
+.hero-authors {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 10px;
+  flex-wrap: wrap;
+  max-width: 760px;
+  margin: 0 auto 18px;
+  color: var(--color-text);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.hero-authors span {
+  white-space: nowrap;
+}
+
+.hero-author-separator {
+  color: var(--color-text-light);
+  font-weight: 700;
 }
 
 .hero-subtitle {
